@@ -2,11 +2,11 @@ import {NavigationNavigateActionPayload} from 'react-navigation';
 
 type ParamsType = { [key: string]: any }
 
-export type InjectedNavigationServiceProps = {
-    $navigation: INavigationService
+export type PXInjectedNavigationServiceProps = {
+    $navigation: PXINavigationService
 }
 
-export interface INavigationService {
+export interface PXINavigationService {
 
     setNavigator(navigator);
 

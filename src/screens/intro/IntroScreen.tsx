@@ -1,19 +1,24 @@
-import {INavigationService} from '@shared';
+import {PXINavigationService, PXInject, PXInjectedNavigationServiceProps, PXScreen} from '@shared';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
-export default class IntroScreen extends React.Component {
-    static readonly RouteName = 'IntroScreen';
+export type IntroScreenProps =
+    PXInjectedNavigationServiceProps
 
-    static start(nav: INavigationService) {
-        nav.navigate(IntroScreen.RouteName);
+@PXInject('$navigation')
+export class IntroScreen extends React.Component<IntroScreenProps> {
+    static readonly ROUTE_NAME = 'IntroScreen';
+    static readonly IS_INTRO_ENABLED_KEY = 'intro-screen/enabled';
+
+    static start(nav: PXINavigationService) {
+        nav.navigate(this.ROUTE_NAME);
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            <PXScreen style={styles.container}>
                 <Text>IntroScreen</Text>
-            </View>
+            </PXScreen>
         )
     }
 }
@@ -21,9 +26,7 @@ export default class IntroScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'green'
+        justifyContent: 'center'
     }
 });

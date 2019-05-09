@@ -27,7 +27,7 @@
         "*.ios"
       ],
       "@src": ["src"],
-      "@shared": ["shared"]
+      "@shared": ["@shared"]
     }
   },
   "types": [

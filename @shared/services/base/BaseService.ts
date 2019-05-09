@@ -21,5 +21,3 @@ export class BaseService<Config extends { [key: string]: IService<any> } = any> 
 
     }
 }
-
-export default BaseService;

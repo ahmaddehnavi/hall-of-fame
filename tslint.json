@@ -11,14 +11,11 @@
     "array-type": false,
     "member-access": false,
     "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
+      false
     ],
+    "no-unused-expression": false,
     "ordered-imports": false,
+    "no-var-requires": false,
     "strict-type-predicates": true,
     "experimentalDecorators": true,
     "no-duplicate-variable": true,

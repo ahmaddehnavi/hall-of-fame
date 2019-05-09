@@ -1,30 +1,42 @@
-import {createNavigationContainer, createStackNavigator, NavigationRouteConfig, NavigationRouteConfigMap} from 'react-navigation';
-import FlameListScreen from './fame-list/FlameListScreen';
-import IntroScreen from './intro/IntroScreen';
-import WelcomeScreen from './welcome/WelcomeScreen';
+import {navigationParamsToProps} from '@shared';
+import {Dimensions} from 'react-native';
+import {
+    createNavigationContainer,
+    createStackNavigator,
+    NavigationRouteConfig,
+    NavigationRouteConfigMap
+} from 'react-navigation';
+import {FameListScreen} from './fame-list/FameListScreen';
+import {IntroScreen} from './intro/IntroScreen';
+import {SplashScreen} from './splash/SplashScreen';
+import {WelcomeScreen} from './welcome/WelcomeScreen';
 
 
 const ROUTES: NavigationRouteConfigMap = {
-    [IntroScreen.RouteName]: {
-        screen: IntroScreen,
-        navigationOptions: {
-            title: 'IntroScreen'
-        }
+    [WelcomeScreen.ROUTE_NAME]: {
+        screen: navigationParamsToProps(WelcomeScreen)
+    },
+    [SplashScreen.ROUTE_NAME]: {
+        screen: navigationParamsToProps(SplashScreen)
     } as NavigationRouteConfig
     ,
-    [WelcomeScreen.RouteName]: {
-        screen: WelcomeScreen
-    },
-    [FlameListScreen.RouteName]: {
-        screen: FlameListScreen
+    [IntroScreen.ROUTE_NAME]: {
+        screen: navigationParamsToProps(IntroScreen)
+    } as NavigationRouteConfig
+    ,
+    [FameListScreen.ROUTE_NAME]: {
+        screen: navigationParamsToProps(FameListScreen)
     },
 
 };
 const AppNavigator = createStackNavigator(
     ROUTES,
     {
-        headerMode: 'float',
-        initialRouteName: IntroScreen.RouteName
+        headerMode: 'none',
+        mode: 'modal',
+        navigationOptions: {
+            swipeEnabled: true
+        }
     }
 );
 
