@@ -26,9 +26,8 @@
         "*.android",
         "*.ios"
       ],
-      "src": [
-        "src"
-      ]
+      "@src": ["src"],
+      "@shared": ["shared"]
     }
   },
   "types": [
@@ -41,5 +40,5 @@
     "ios",
     "node_modules"
   ],
-  "compileOnSave": true
+  "compileOnSave": false
 }
