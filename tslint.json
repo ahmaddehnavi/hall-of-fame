@@ -8,28 +8,8 @@
   "rules": {
     "object-literal-sort-keys": false,
     "interface-over-type-literal": false,
+    "array-type": false,
     "member-access": false,
-    "typedef-whitespace": [
-      false,
-      {
-        "call-signature": "nospace",
-        "index-signature": "nospace",
-        "parameter": "nospace",
-        "property-declaration": "nospace",
-        "variable-declaration": "nospace"
-      },
-      {
-        "call-signature": "space",
-        "index-signature": "space",
-        "parameter": "space",
-        "property-declaration": "space",
-        "variable-declaration": "space"
-      }
-    ],
-    "forin": true,
-    "label-position": true,
-    "no-arg": true,
-    "no-bitwise": true,
     "no-console": [
       true,
       "debug",
@@ -38,10 +18,12 @@
       "timeEnd",
       "trace"
     ],
+    "ordered-imports": false,
     "strict-type-predicates": true,
     "experimentalDecorators": true,
     "no-duplicate-variable": true,
     "no-empty": false,
+    "prefer-const": false,
     "no-eval": true,
     "no-shadowed-variable": true,
     "no-string-literal": true,
