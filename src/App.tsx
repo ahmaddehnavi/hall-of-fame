@@ -1,6 +1,7 @@
 import {DIProvider, NavigationService} from '@shared';
 import {Provider} from 'mobx-react';
 import React from 'react';
+import {I18nManager} from 'react-native';
 import {ThemeService} from '../@shared/services/theme/ThemeService';
 import AppNavigator from './screens/AppNavigator';
 import {ApiService} from './services/api/ApiService';
@@ -32,6 +33,9 @@ export default class App extends React.Component {
                 this.services[key].$onStart();
             }
         }
+
+        I18nManager.allowRTL(false);
+        I18nManager.forceRTL(false);
     }
 
     componentWillUnmount(): void {
