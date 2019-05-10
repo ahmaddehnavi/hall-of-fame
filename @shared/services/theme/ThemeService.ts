@@ -1,17 +1,15 @@
-import {DEFAULT_THEME} from '@shared';
+import {DEFAULT_THEME, ThemeType} from '@shared';
 import autobind from 'autobind-decorator';
 import deepmerge from 'deepmerge';
 import {action, observable} from 'mobx';
 import {BaseService} from '../base/BaseService';
-import {IThemeService, ThemeType} from './IThemeService';
 
 export type InjectedThemeServiceProps = {
-    $theme: IThemeService
+    $theme: ThemeService
 }
 
 @autobind
-export class ThemeService extends BaseService<{}>
-    implements IThemeService {
+export class ThemeService extends BaseService<{}> {
 
     public static readonly NAME = '$theme';
 
@@ -25,6 +23,10 @@ export class ThemeService extends BaseService<{}>
 
     get() {
         return this._configs || {}
+    }
+
+    get styles() {
+        return this.get().styles || {};
     }
 
     get colors() {
