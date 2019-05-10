@@ -1,19 +1,19 @@
 import * as React from 'react';
-import {Platform, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, TouchableWithoutFeedbackProps} from 'react-native';
+import {Platform, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, TouchableWithoutFeedbackProps, View} from 'react-native';
 
 
-export type PXTouchableProps = TouchableWithoutFeedbackProps & {
+export type TouchableProps = TouchableWithoutFeedbackProps & {
     circle?: boolean
     withoutFeedback?: boolean
     children: React.ReactNode
 }
 
-export function Touchable(props: PXTouchableProps) {
+export function Touchable(props: TouchableProps) {
 
     if (props.withoutFeedback) {
         return (
             <TouchableWithoutFeedback
-                {...this.props}
+                {...props}
             />
         );
     }
@@ -21,7 +21,7 @@ export function Touchable(props: PXTouchableProps) {
         if (Platform.Version >= 21) {
             return (
                 <TouchableNativeFeedback
-                    {...this.props}
+                    {...props}
                     background={
                         props.circle ?
                             TouchableNativeFeedback.SelectableBackgroundBorderless() :
@@ -32,13 +32,13 @@ export function Touchable(props: PXTouchableProps) {
         }
         return (
             <TouchableNativeFeedback
-                {...this.props}
+                {...props}
                 background={undefined}
             />
         )
     }
 
     return (
-        <TouchableOpacity {...this.props}/>
+        <TouchableOpacity {...props}/>
     )
 }
