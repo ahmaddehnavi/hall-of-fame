@@ -20,7 +20,7 @@ export type PBackHandlerProps = {
 /**
  *
  */
-export class PXMultiBackHandler extends React.PureComponent<PBackHandlerProps> {
+export class MultiBackHandler extends React.PureComponent<PBackHandlerProps> {
 
     static defaultProps = {
         maxCount: 2

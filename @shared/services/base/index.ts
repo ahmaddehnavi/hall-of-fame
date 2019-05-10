@@ -1,2 +1,2 @@
-export {PXBaseService} from './PXBaseService'
-export {PXIService} from './PXIService'
+export {BaseService} from './BaseService'
+export {IService} from './IService'

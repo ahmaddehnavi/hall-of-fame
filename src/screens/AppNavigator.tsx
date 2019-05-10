@@ -1,4 +1,4 @@
-import {PXNavigationParamsToProps} from '@shared';
+import {NavigationParamsToProps} from '@shared';
 import {createNavigationContainer, createStackNavigator, NavigationRouteConfig, NavigationRouteConfigMap} from 'react-navigation';
 
 import {FameListScreen} from './fame-list/FameListScreen';
@@ -10,18 +10,18 @@ import { fromRight } from 'react-navigation-transitions';
 
 const ROUTES: NavigationRouteConfigMap = {
     [SplashScreen.ROUTE_NAME]: {
-        screen: PXNavigationParamsToProps(SplashScreen)
+        screen: NavigationParamsToProps(SplashScreen)
     } as NavigationRouteConfig
     ,
     [WelcomeScreen.ROUTE_NAME]: {
-        screen: PXNavigationParamsToProps(WelcomeScreen)
+        screen: NavigationParamsToProps(WelcomeScreen)
     },
     [IntroScreen.ROUTE_NAME]: {
-        screen: PXNavigationParamsToProps(IntroScreen)
+        screen: NavigationParamsToProps(IntroScreen)
     } as NavigationRouteConfig
     ,
     [FameListScreen.ROUTE_NAME]: {
-        screen: PXNavigationParamsToProps(FameListScreen)
+        screen: NavigationParamsToProps(FameListScreen)
     },
 
 };

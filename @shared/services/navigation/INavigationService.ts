@@ -3,14 +3,14 @@ import {NavigationNavigateActionPayload, NavigationResetActionPayload} from 'rea
 type ParamsType = { [key: string]: any }
 
 export type PXInjectedNavigationServiceProps = {
-    $navigation: PXINavigationService
+    $navigation: INavigationService
 }
 
 /**
  *  hide navigation specification from app component so you can replace navigation with another one
  *  #setNavigator should be called before dispatch any action.
  */
-export interface PXINavigationService {
+export interface INavigationService {
 
     setNavigator(navigator);
 

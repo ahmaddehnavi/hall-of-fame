@@ -4481,6 +4481,10 @@ react-navigation-tabs@0.8.4:
     react-lifecycles-compat "^3.0.4"
     react-native-tab-view "^1.0.0"
 
+react-navigation-transitions@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/react-navigation-transitions/-/react-navigation-transitions-1.0.10.tgz#9540aaaa6e115e7308761106ab4d7727daa1fcf5"
+
 react-navigation@2.18.2:
   version "2.18.2"
   resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-2.18.2.tgz#ba278ded41f736d029c7cae5d54ab1427dc6ed34"

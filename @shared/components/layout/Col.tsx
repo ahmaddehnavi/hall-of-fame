@@ -1,3 +1,3 @@
 import {View} from 'react-native';
 
-export const PXCol = View;
+export const Col = View;

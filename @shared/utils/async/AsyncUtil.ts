@@ -1,4 +1,4 @@
-export class PXAsyncUtil {
+export class AsyncUtil {
     static wait(time: number) {
         return new Promise(resolve => {
             setTimeout(resolve, time)

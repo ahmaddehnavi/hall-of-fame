@@ -1,4 +1,4 @@
-import {PXINavigationService, PXInject, PXInjectedNavigationServiceProps, PXMultiBackHandler} from '@shared';
+import {INavigationService, PXInject, PXInjectedNavigationServiceProps, MultiBackHandler} from '@shared';
 import autobind from 'autobind-decorator';
 import React from 'react';
 import {BackHandler, StyleSheet, Text, View} from 'react-native';
@@ -12,15 +12,19 @@ type FameListScreenProps =
 export class FameListScreen extends React.Component<FameListScreenProps> {
     static readonly ROUTE_NAME = 'FameListScreen';
 
-    static start(nav: PXINavigationService) {
+    static start(nav: INavigationService) {
         nav.navigate(this.ROUTE_NAME);
+    }
+
+    static resetTo(nav: INavigationService) {
+        nav.reset(this.ROUTE_NAME);
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <Text>FameListScreen</Text>
-                <PXMultiBackHandler
+                <MultiBackHandler
                     timeout={500}
                     maxCount={2}
                     onPress={this.handleBackPress}/>
@@ -36,7 +40,7 @@ export class FameListScreen extends React.Component<FameListScreenProps> {
         }
 
         if (pressCount === 2) {
-            let success = await SoundUtil.playTest();
+            await SoundUtil.playTest();
             BackHandler.exitApp();
         }
     }

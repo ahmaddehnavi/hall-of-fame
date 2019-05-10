@@ -1,13 +1,14 @@
+import {PropsWithChildren} from 'react';
 import * as React from 'react';
 import {Platform, StyleSheet, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, TouchableWithoutFeedbackProps} from 'react-native';
 
 
-export type PXTouchableProps = TouchableWithoutFeedbackProps & {
+export type PXTouchableProps = PropsWithChildren<TouchableWithoutFeedbackProps> & {
     circle?: boolean
     withoutFeedback?: boolean
 }
 
-export function PXTouchable(props: PXTouchableProps) {
+export function Touchable(props: PXTouchableProps) {
 
     if (props.withoutFeedback) {
         return (

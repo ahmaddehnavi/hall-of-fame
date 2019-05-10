@@ -1,13 +1,15 @@
-import {PXProvider, PXNavigationService} from '@shared';
+import {PXProvider, NavigationService} from '@shared';
 import {Provider} from 'mobx-react';
 import React from 'react';
 import AppNavigator from './screens/AppNavigator';
+import {IntroService} from './services/intro/IntroService';
 
 
 export default class App extends React.Component {
 
     protected services = {
-        [PXNavigationService.NAME]: new PXNavigationService()
+        [NavigationService.NAME]: new NavigationService(),
+        [IntroService.NAME]: new IntroService(),
     };
 
     constructor(p) {
@@ -38,7 +40,7 @@ export default class App extends React.Component {
     }
 
     render() {
-        let nav = this.services[PXNavigationService.NAME];
+        let nav = this.services[NavigationService.NAME];
 
         return (
             <Provider {...this.services}>

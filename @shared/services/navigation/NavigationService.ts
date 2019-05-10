@@ -8,8 +8,8 @@ import {
     NavigationNavigateActionPayload, NavigationResetAction,
     NavigationResetActionPayload, StackActions
 } from 'react-navigation';
-import {PXBaseService} from '../base/PXBaseService';
-import {PXINavigationService} from './PXINavigationService';
+import {BaseService} from '../base/BaseService';
+import {INavigationService} from './INavigationService';
 
 type ParamsType = { [key: string]: any }
 
@@ -18,7 +18,7 @@ type ParamsType = { [key: string]: any }
  *  #setNavigator should be called before dispatch any action.
  */
 @autobind
-export class PXNavigationService extends PXBaseService<{}> implements PXINavigationService {
+export class NavigationService extends BaseService<{}> implements INavigationService {
     public static readonly NAME = '$navigation';
     protected Logger = Logger.withTag('NavigationService');
 

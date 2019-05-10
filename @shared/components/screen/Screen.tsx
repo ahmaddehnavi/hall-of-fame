@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, ViewProps} from 'react-native';
-import {PXCol} from '../layout/PXCol';
+import {Col} from '../layout/Col';
 
 export type ScreenProps = ViewProps & {
     children: React.ReactNode
@@ -10,12 +10,12 @@ export type ScreenProps = ViewProps & {
 /**
  * can be use for root element of each screen
  */
-export class PXScreen extends React.Component<ScreenProps> {
+export class Screen extends React.Component<ScreenProps> {
 
 
     render() {
         return (
-            <PXCol
+            <Col
                 {...this.props}
                 style={[
                     styles.screen,

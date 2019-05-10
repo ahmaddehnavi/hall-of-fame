@@ -1,2 +1,2 @@
-export * from './di/PXDIUtil'
-export * from './async/PXAsyncUtil'
+export * from './di/DIUtil'
+export * from './async/AsyncUtil'

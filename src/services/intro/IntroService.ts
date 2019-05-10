@@ -1,11 +1,11 @@
-import {PXBaseService} from '@shared';
+import {BaseService} from '@shared';
 import {AsyncStorage} from 'react-native';
 
 export type InjectedIntroServiceProps = {
     $intro:IntroService
 }
 
-export class IntroService extends PXBaseService {
+export class IntroService extends BaseService {
     public static readonly NAME = '$intro';
     public static readonly IS_INTRO_ENABLED_KEY = '$intro/is-enabled';
 
