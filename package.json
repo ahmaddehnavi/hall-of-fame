@@ -15,7 +15,8 @@
     "react": "16.6.3",
     "react-native": "0.58.6",
     "react-native-sound": "^0.10.12",
-    "react-navigation": "2.18.2"
+    "react-navigation": "2.18.2",
+    "react-navigation-transitions": "^1.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
