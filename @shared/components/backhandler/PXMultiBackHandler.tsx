@@ -6,13 +6,15 @@ export type PBackHandlerProps = {
     children?: React.ReactNode
     onPress?: (count: number) => boolean | void | Promise<void>
     /***
-     * if next press happen before timeout onPress only notified for last press
+     * max duration between back press to be counted
      */
     timeout?: number
     /**
      *  if press count > maxCount then timeout will ignore and press notified
      */
     maxCount?: number
+
+    notifyAll?: boolean
 }
 
 /**
@@ -25,7 +27,7 @@ export class PXMultiBackHandler extends React.PureComponent<PBackHandlerProps> {
     };
 
     protected pressCount = 0;
-    protected resetPressCountTimeoutId: number | undefined = undefined;
+    protected notifyAndResetTimeoutId: number | undefined = undefined;
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
@@ -38,22 +40,13 @@ export class PXMultiBackHandler extends React.PureComponent<PBackHandlerProps> {
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-        this.resetPressCountTimeoutId &&
-        clearTimeout(this.resetPressCountTimeoutId);
+        this.notifyAndResetTimeoutId &&
+        clearTimeout(this.notifyAndResetTimeoutId);
     }
 
     @autobind
-    notifyBackPress() {
-        if (this.props.onPress) {
-            return this.props.onPress(this.pressCount)
-        }
-        return false;
-    }
-
-    @autobind
-    notifyAndResetPressCount() {
-        let count = Math.min(this.pressCount, this.props.maxCount || Number.MAX_SAFE_INTEGER);
-        this.pressCount = 0;
+    notifyBackPress(count) {
+        count = Math.min(count, this.props.maxCount || Number.MAX_SAFE_INTEGER);
         if (this.props.onPress) {
             return this.props.onPress(count)
         }
@@ -61,23 +54,45 @@ export class PXMultiBackHandler extends React.PureComponent<PBackHandlerProps> {
     }
 
     @autobind
+    resetPressCount() {
+        let count = this.pressCount;
+        this.pressCount = 0;
+        return count;
+    }
+
+    @autobind
+    notifyAndResetPressCount() {
+        let count = this.resetPressCount();
+        return this.notifyBackPress(count)
+    }
+
+    @autobind
     handleBackPress() {
-        // cancel pending reset && plus counter
-        if (this.resetPressCountTimeoutId) {
-            clearTimeout(this.resetPressCountTimeoutId);
-            this.resetPressCountTimeoutId = undefined;
+        // cancel pending reset
+        if (this.notifyAndResetTimeoutId) {
+            clearTimeout(this.notifyAndResetTimeoutId);
+            this.notifyAndResetTimeoutId = undefined;
         }
+        // plus counter
         this.pressCount++;
 
+        // check if max count not reached .
         if (!this.props.maxCount || this.pressCount < this.props.maxCount) {
-            // schedule counter reset
             if (this.props.timeout && this.props.timeout > 0) {
-                this.resetPressCountTimeoutId = setTimeout(this.notifyAndResetPressCount, this.props.timeout);
-                return true;
+
+                if (this.props.notifyAll) {
+                    // notify count then schedule counter reset
+                    this.notifyAndResetTimeoutId = setTimeout(this.resetPressCount, this.props.timeout);
+                    return this.notifyBackPress(this.pressCount)
+                } else {
+                    // schedule counter reset and notify
+                    this.notifyAndResetTimeoutId = setTimeout(this.notifyAndResetPressCount, this.props.timeout);
+                    return true;
+                }
             }
         }
 
-        return this.notifyBackPress()
+        return this.notifyBackPress(this.pressCount)
     }
 
 }
