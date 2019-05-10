@@ -1,25 +1,18 @@
-import {Col, INavigationService, PXInject, PXInjectedNavigationServiceProps, Screen, Touchable} from '@shared';
+import {Col, INavigationService, DIInject, InjectedNavigationServiceProps, Screen, Touchable} from '@shared';
 import autobind from 'autobind-decorator';
+import {observer} from 'mobx-react';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
+import {InjectedApiServiceProps} from '../../services/api/ApiService';
 import {WelcomeScreen} from '../welcome/WelcomeScreen';
 
-export function IntroScreenComponent(props: { onPress: () => void }) {
-    return (
-        <Screen>
-            <Touchable onPress={props.onPress}>
-                <Col style={styles.container}>
-                    <Text>IntroScreen</Text>
-                </Col>
-            </Touchable>
-        </Screen>
-    )
-}
+import AppIntroSlider from 'react-native-app-intro-slider';
 
 export type IntroScreenProps =
-    PXInjectedNavigationServiceProps
+    InjectedNavigationServiceProps
 
-@PXInject('$navigation')
+@DIInject('$navigation')
+@observer
 export class IntroScreen extends React.Component<IntroScreenProps> {
     static readonly ROUTE_NAME = 'IntroScreen';
 
@@ -38,13 +31,26 @@ export class IntroScreen extends React.Component<IntroScreenProps> {
 
     render() {
         return (
-            <IntroScreenComponent onPress={this.handleOnPress}/>
+            <IntroComponent
+                onPress={this.handleOnPress}
+            />
         )
     }
 }
 
+
+function IntroComponent(props: { onPress: () => void }) {
+    return (
+        <Screen>
+            <Col style={styles.container}>
+                <Text>IntroScreen</Text>
+            </Col>
+        </Screen>
+    )
+}
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     }

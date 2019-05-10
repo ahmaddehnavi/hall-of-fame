@@ -9,6 +9,7 @@ import { fromRight } from 'react-navigation-transitions';
 
 
 const ROUTES: NavigationRouteConfigMap = {
+
     [SplashScreen.ROUTE_NAME]: {
         screen: NavigationParamsToProps(SplashScreen)
     } as NavigationRouteConfig
@@ -28,6 +29,7 @@ const ROUTES: NavigationRouteConfigMap = {
 const AppNavigator = createStackNavigator(
     ROUTES,
     {
+        initialRouteName: WelcomeScreen.ROUTE_NAME,
         headerMode: 'none',
         mode: 'card',
         transitionConfig: () => fromRight(300),

@@ -18,7 +18,7 @@ export class IntroService extends BaseService {
         return true;
     }
 
-    setIntroEnabld(enabled: boolean) {
+    setIntroEnabled(enabled: boolean) {
         return AsyncStorage.setItem(IntroService.IS_INTRO_ENABLED_KEY, enabled ? 'true' : 'false');
     }
 

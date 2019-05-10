@@ -1,4 +1,4 @@
-import {DIInject, INavigationService, InjectedNavigationServiceProps, InjectedThemeServiceProps, MultiBackHandler, Row, Screen} from '@shared';
+import {Col, DIInject, INavigationService, InjectedNavigationServiceProps, InjectedThemeServiceProps, MultiBackHandler, Row, Screen} from '@shared';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
@@ -60,6 +60,7 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps, State> {
                 onRandomisePress={this.handleRandomisePress}
                 oSavePress={this.handleSavePress}
                 animation={this.animations[this.state.currentAnimationIndex]}
+                $theme={this.props.$theme}
             />
         )
     }
@@ -87,7 +88,9 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps, State> {
     }
 }
 
-type WelcomeComponentProps = {
+type WelcomeComponentProps =
+    InjectedThemeServiceProps &
+    {
     oSavePress: () => void
     onRandomisePress: () => void
     onBackPress: (count: number) => void | boolean,
@@ -103,23 +106,28 @@ function WelcomeComponent(props: WelcomeComponentProps) {
                 resizeMode={'contain'}
                 source={props.animation}
             />
-            <TextInput
-                placeholder={'Enter a number'}
-                style={styles.textInput}
-            />
-
-            <Row>
-                <Button
-                    title={'Save'}
-                    onPress={props.oSavePress}
+            <Col style={{
+                paddingHorizontal: props.$theme.dimens.screen.paddingHorizontal,
+                paddingVertical: props.$theme.dimens.screen.paddingVertical,
+                backgroundColor: '#fff'
+            }}>
+                <TextInput
+                    placeholder={'Enter a number'}
+                    style={styles.textInput}
                 />
-                <View style={{width: 16}}/>
-                <Button
-                    title={'Randomise'}
-                    onPress={props.onRandomisePress}
-                />
-            </Row>
 
+                <Row>
+                    <Button
+                        title={'Save'}
+                        onPress={props.oSavePress}
+                    />
+                    <View style={{width: 16}}/>
+                    <Button
+                        title={'Randomise'}
+                        onPress={props.onRandomisePress}
+                    />
+                </Row>
+            </Col>
             <MultiBackHandler
                 timeout={500}
                 maxCount={2}

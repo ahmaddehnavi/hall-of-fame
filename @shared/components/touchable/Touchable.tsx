@@ -1,11 +1,11 @@
-import {PropsWithChildren} from 'react';
 import * as React from 'react';
-import {Platform, StyleSheet, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, TouchableWithoutFeedbackProps} from 'react-native';
+import {Platform, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, TouchableWithoutFeedbackProps} from 'react-native';
 
 
-export type PXTouchableProps = PropsWithChildren<TouchableWithoutFeedbackProps> & {
+export type PXTouchableProps = TouchableWithoutFeedbackProps & {
     circle?: boolean
     withoutFeedback?: boolean
+    children: React.ReactNode
 }
 
 export function Touchable(props: PXTouchableProps) {
@@ -42,7 +42,3 @@ export function Touchable(props: PXTouchableProps) {
         <TouchableOpacity {...this.props}/>
     )
 }
-
-const styles = StyleSheet.create({
-    row: {flexDirection: 'row'}
-});

@@ -2,7 +2,7 @@ import {NavigationNavigateActionPayload, NavigationResetActionPayload} from 'rea
 
 type ParamsType = { [key: string]: any }
 
-export type PXInjectedNavigationServiceProps = {
+export type InjectedNavigationServiceProps = {
     $navigation: INavigationService
 }
 

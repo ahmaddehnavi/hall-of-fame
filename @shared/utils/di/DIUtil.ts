@@ -3,7 +3,7 @@ import {inject, Provider} from 'mobx-react';
 
 type ServiceName = '$navigation' | string
 
-export function PXInject(...names: Array<ServiceName>) {
+export function DIInject(...names: Array<ServiceName>) {
     return inject((stores, nextProps, context) => {
         let injects = {};
         names.forEach((name) => {
@@ -21,4 +21,4 @@ export function PXInject(...names: Array<ServiceName>) {
     })
 }
 
-export const PXProvider = Provider;
+export const DIProvider = Provider;

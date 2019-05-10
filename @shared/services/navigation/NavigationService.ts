@@ -1,13 +1,6 @@
-import {Logger} from 'ad-logger';
 import autobind from 'autobind-decorator';
 import {action, observable} from 'mobx';
-import {
-    NavigationAction,
-    NavigationActions,
-    NavigationContainerComponent,
-    NavigationNavigateActionPayload, NavigationResetAction,
-    NavigationResetActionPayload, StackActions
-} from 'react-navigation';
+import {NavigationAction, NavigationActions, NavigationNavigateActionPayload, NavigationResetActionPayload, StackActions} from 'react-navigation';
 import {BaseService} from '../base/BaseService';
 import {INavigationService} from './INavigationService';
 
@@ -20,7 +13,6 @@ type ParamsType = { [key: string]: any }
 @autobind
 export class NavigationService extends BaseService<{}> implements INavigationService {
     public static readonly NAME = '$navigation';
-    protected Logger = Logger.withTag('NavigationService');
 
     @observable.ref
     protected _navigator: { dispatch: (action: NavigationAction) => void };

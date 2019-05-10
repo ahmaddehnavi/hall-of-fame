@@ -3,10 +3,10 @@ import Assets from '../assets/Assets';
 
 
 export class SoundUtil {
-    static playTest() {
+    static play(sound: number) {
         return new Promise(resolve => {
             Sound.setCategory('Playback', true);
-            let player = new Sound(Assets.sounds.test, error => {
+            let player = new Sound(sound, error => {
                     if (error) {
                         resolve(false)
                     } else {

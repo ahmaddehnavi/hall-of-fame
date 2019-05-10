@@ -8,6 +8,7 @@
   "rules": {
     "object-literal-sort-keys": false,
     "interface-over-type-literal": false,
+    "member-ordering": [false],
     "array-type": false,
     "member-access": false,
     "no-console": [
