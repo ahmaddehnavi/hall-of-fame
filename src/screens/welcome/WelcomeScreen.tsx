@@ -12,7 +12,8 @@ import {
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
-import {BackHandler, Image, ImageSourcePropType, StyleSheet, View} from 'react-native';
+import {BackHandler, ImageSourcePropType, StyleSheet, View} from 'react-native';
+import {Image as AnimatedImage} from 'react-native-animatable';
 import {TextField} from 'react-native-material-textfield';
 import Assets from '../../assets/Assets';
 import {SoundUtil} from '../../utils/SoundUtil';
@@ -40,13 +41,21 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps, State> {
         currentAnimationIndex: 0
     };
 
-    animations = [
+    images = [
         Assets.images.gif_1,
         Assets.images.gif_2,
         Assets.images.gif_3,
         Assets.images.gif_4,
         Assets.images.gif_5,
     ];
+    animations = [
+        'fadeIn',
+        'zoomIn',
+        'slideInLeft',
+        'slideInRight',
+        'bounce',
+    ];
+
     protected animationChangerIntervalId;
 
     componentDidMount() {
@@ -60,7 +69,7 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps, State> {
     @autobind
     showNextAnimation() {
         this.setState({
-            currentAnimationIndex: (this.state.currentAnimationIndex + 1) % this.animations.length
+            currentAnimationIndex: (this.state.currentAnimationIndex + 1) % this.images.length
         })
     }
 
@@ -70,8 +79,9 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps, State> {
                 onBackPress={this.handleBackPress}
                 onRandomisePress={this.handleRandomisePress}
                 oSavePress={this.handleSavePress}
-                animation={this.animations[this.state.currentAnimationIndex]}
+                image={this.images[this.state.currentAnimationIndex]}
                 $theme={this.props.$theme}
+                animation={this.animations[this.state.currentAnimationIndex]}
             />
         )
     }
@@ -104,18 +114,22 @@ type WelcomeComponentProps =
     {
     oSavePress: () => void
     onRandomisePress: () => void
-    onBackPress: (count: number) => void | boolean,
-    animation: ImageSourcePropType,
+        onBackPress: (count: number) => void | boolean
+        image: ImageSourcePropType
+        animation?: string
 }
 
 function WelcomeComponent(props: WelcomeComponentProps) {
     // let styles = makeStyle(props.$theme);
     return (
         <Screen style={styles.container}>
-            <Image
+            <AnimatedImage
+                animation={props.animation}
+                duration={2500}
+                delay={150}
                 style={{flex: 1, width: '90%'}}
                 resizeMode={'contain'}
-                source={props.animation}
+                source={props.image}
             />
             <Col style={{
                 paddingHorizontal: props.$theme.dimens.screen.paddingHorizontal,
