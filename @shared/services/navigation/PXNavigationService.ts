@@ -2,14 +2,14 @@ import {Logger} from 'ad-logger';
 import autobind from 'autobind-decorator';
 import {action, observable} from 'mobx';
 import {NavigationAction, NavigationActions, NavigationContainerComponent, NavigationNavigateActionPayload} from 'react-navigation';
-import {BaseService} from '../base/BaseService';
+import {PXBaseService} from '../base/PXBaseService';
 import {PXINavigationService} from './PXINavigationService';
 
 type ParamsType = { [key: string]: any }
 
 
 @autobind
-export class NavigationService extends BaseService<{}> implements PXINavigationService {
+export class PXNavigationService extends PXBaseService<{}> implements PXINavigationService {
     public static readonly NAME = '$navigation';
     protected Logger = Logger.withTag('NavigationService');
 

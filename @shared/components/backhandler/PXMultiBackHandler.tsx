@@ -4,7 +4,7 @@ import {BackHandler, StyleSheet} from 'react-native';
 
 export type PBackHandlerProps = {
     children?: React.ReactNode
-    onPress?: (count: number) => boolean | void
+    onPress?: (count: number) => boolean | void | Promise<void>
     /***
      * if next press happen before timeout onPress only notified for last press
      */

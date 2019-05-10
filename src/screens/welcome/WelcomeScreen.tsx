@@ -36,7 +36,7 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps> {
         if (count === 1) {
             FameListScreen.start(this.props.$navigation)
         } else if (count === 2) {
-            SoundUtil.play()
+            SoundUtil.playTest()
                 .then(value => {
                     BackHandler.exitApp();
                 })

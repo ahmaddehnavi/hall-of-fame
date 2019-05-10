@@ -3,9 +3,8 @@ import Sound from 'react-native-sound'
 const TestSound = require('../assets/sounds/sound.wav');
 
 export class SoundUtil {
-    static play() {
+    static playTest() {
         return new Promise(resolve => {
-
             Sound.setCategory('Playback', true);
             let player = new Sound(TestSound, error => {
                     if (error) {
@@ -14,6 +13,7 @@ export class SoundUtil {
                         player.play(success => {
                             resolve(success)
                         });
+
                     }
                 }
             );

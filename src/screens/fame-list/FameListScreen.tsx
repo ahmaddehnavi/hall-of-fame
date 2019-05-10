@@ -29,14 +29,15 @@ export class FameListScreen extends React.Component<FameListScreenProps> {
     }
 
     @autobind
-    handleBackPress(count: number) {
-        if (count === 1) {
-            WelcomeScreen.start(this.props.$navigation)
-        } else if (count === 2) {
-            SoundUtil.play()
-                .then(value => {
-                    BackHandler.exitApp();
-                })
+    async handleBackPress(pressCount: number) {
+        if (pressCount === 1) {
+            WelcomeScreen.start(this.props.$navigation);
+            return;
+        }
+
+        if (pressCount === 2) {
+            let success = await SoundUtil.playTest();
+            BackHandler.exitApp();
         }
     }
 }

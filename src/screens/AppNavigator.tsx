@@ -1,4 +1,4 @@
-import {navigationParamsToProps} from '@shared';
+import {PXNavigationParamsToProps} from '@shared';
 import {Dimensions} from 'react-native';
 import {
     createNavigationContainer,
@@ -14,18 +14,18 @@ import {WelcomeScreen} from './welcome/WelcomeScreen';
 
 const ROUTES: NavigationRouteConfigMap = {
     [WelcomeScreen.ROUTE_NAME]: {
-        screen: navigationParamsToProps(WelcomeScreen)
+        screen: PXNavigationParamsToProps(WelcomeScreen)
     },
     [SplashScreen.ROUTE_NAME]: {
-        screen: navigationParamsToProps(SplashScreen)
+        screen: PXNavigationParamsToProps(SplashScreen)
     } as NavigationRouteConfig
     ,
     [IntroScreen.ROUTE_NAME]: {
-        screen: navigationParamsToProps(IntroScreen)
+        screen: PXNavigationParamsToProps(IntroScreen)
     } as NavigationRouteConfig
     ,
     [FameListScreen.ROUTE_NAME]: {
-        screen: navigationParamsToProps(FameListScreen)
+        screen: PXNavigationParamsToProps(FameListScreen)
     },
 
 };

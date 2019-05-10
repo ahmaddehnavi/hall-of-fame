@@ -4,7 +4,7 @@ import {View, StyleSheet, ViewProps} from 'react-native';
 /**
  * use Row or Col to make jsx more readable
  */
-export function Row(props: ViewProps) {
+export function PXRow(props: ViewProps) {
     return (
         <View
             {...props}

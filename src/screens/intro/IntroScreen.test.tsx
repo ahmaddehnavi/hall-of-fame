@@ -1,4 +1,4 @@
-import {NavigationService} from '@shared';
+import {PXNavigationService} from '@shared';
 import React from 'react';
 import 'react-native';
 // Note: test renderer must be required after react-native.
@@ -8,7 +8,7 @@ import {IntroScreen} from './IntroScreen';
 it('renders correctly', () => {
     let tree = renderer.create(
         <IntroScreen
-            $navigation={new NavigationService()}
+            $navigation={new PXNavigationService()}
         />
     );
     expect(tree).toMatchSnapshot();

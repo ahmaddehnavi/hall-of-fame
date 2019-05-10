@@ -1,8 +1,8 @@
 import autobind from 'autobind-decorator';
-import {IService} from './IService';
+import {PXIService} from './PXIService';
 
 @autobind
-export class BaseService<Config extends { [key: string]: IService<any> } = any> implements IService<Config> {
+export class PXBaseService<Config extends { [key: string]: PXIService<any> } = any> implements PXIService<Config> {
     protected _config;
 
     protected get $config() {

@@ -1,1 +1,1 @@
-export * from './DIUtil'
+export * from './di/PXDIUtil'
