@@ -1,8 +1,19 @@
-import {Col, DIInject, INavigationService, InjectedNavigationServiceProps, InjectedThemeServiceProps, MultiBackHandler, Row, Screen} from '@shared';
+import {
+    Button,
+    Col,
+    DIInject,
+    INavigationService,
+    InjectedNavigationServiceProps,
+    InjectedThemeServiceProps,
+    MultiBackHandler,
+    Row,
+    Screen
+} from '@shared';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
-import {BackHandler, Button, Image, ImageSourcePropType, StyleSheet, TextInput, View} from 'react-native';
+import {BackHandler, Image, ImageSourcePropType, StyleSheet, View} from 'react-native';
+import {TextField} from 'react-native-material-textfield';
 import Assets from '../../assets/Assets';
 import {SoundUtil} from '../../utils/SoundUtil';
 import {FameListScreen} from '../fame-list/FameListScreen';
@@ -111,20 +122,27 @@ function WelcomeComponent(props: WelcomeComponentProps) {
                 paddingVertical: props.$theme.dimens.screen.paddingVertical,
                 backgroundColor: '#fff'
             }}>
-                <TextInput
-                    placeholder={'Enter a number'}
+                <TextField
+                    label={'Enter a number'}
                     style={styles.textInput}
+                    keyboardType={'numeric'}
                 />
 
                 <Row>
                     <Button
+                        style={{flex: 1}}
                         title={'Save'}
                         onPress={props.oSavePress}
+                        filled
+                        accent
                     />
                     <View style={{width: 16}}/>
                     <Button
+                        style={{flex: 1}}
                         title={'Randomise'}
                         onPress={props.onRandomisePress}
+                        accent
+                        outlined
                     />
                 </Row>
             </Col>
