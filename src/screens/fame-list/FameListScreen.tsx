@@ -1,16 +1,20 @@
-import {INavigationService, MultiBackHandler, DIInject, InjectedNavigationServiceProps, Screen} from '@shared';
+import {DIInject, INavigationService, InjectedNavigationServiceProps, Resource} from '@shared';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
-import {BackHandler, StyleSheet, Text} from 'react-native';
+import {BackHandler, StyleSheet} from 'react-native';
 import Assets from '../../assets/Assets';
+import {FameItemModel} from '../../models/FameItemModel';
+import {InjectedApiServiceProps} from '../../services/api/ApiService';
 import {SoundUtil} from '../../utils/SoundUtil';
 import {WelcomeScreen} from '../welcome/WelcomeScreen';
+import {FameListComponent} from './FameListComponent';
 
 type FameListScreenProps =
-    InjectedNavigationServiceProps
+    InjectedNavigationServiceProps &
+    InjectedApiServiceProps
 
-@DIInject('$navigation')
+@DIInject('$navigation', '$api')
 @observer
 export class FameListScreen extends React.Component<FameListScreenProps> {
     static readonly ROUTE_NAME = 'FameListScreen';
@@ -23,9 +27,14 @@ export class FameListScreen extends React.Component<FameListScreenProps> {
         nav.reset(this.ROUTE_NAME);
     }
 
+    componentDidMount(): void {
+        this.props.$api.fameListApi.load()
+    }
+
     render() {
         return (
             <FameListComponent
+                listResource={this.props.$api.fameListApi}
                 onBackPress={this.handleBackPress}/>
         )
     }
@@ -45,27 +54,3 @@ export class FameListScreen extends React.Component<FameListScreenProps> {
 }
 
 
-type FameListComponentProps = {
-    onBackPress: (count: number) => void | boolean | Promise<void>
-}
-
-function FameListComponent(props: FameListComponentProps) {
-    return (
-        <Screen style={styles.container}>
-            <Text>FameListScreen</Text>
-
-            <MultiBackHandler
-                timeout={500}
-                maxCount={2}
-                onPress={props.onBackPress}/>
-        </Screen>
-    )
-
-}
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});

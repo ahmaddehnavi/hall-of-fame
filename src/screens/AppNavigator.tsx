@@ -29,7 +29,7 @@ const ROUTES: NavigationRouteConfigMap = {
 const AppNavigator = createStackNavigator(
     ROUTES,
     {
-        initialRouteName: WelcomeScreen.ROUTE_NAME,
+        initialRouteName: FameListScreen.ROUTE_NAME,
         headerMode: 'none',
         mode: 'card',
         transitionConfig: () => fromRight(300),

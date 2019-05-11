@@ -24,7 +24,7 @@ export class ApiService extends BaseService {
          */
         this.http = new ADRest<Response>(new ADFetchClient());
 
-        this.http.interceptors.push(new ADBaseUrlHttpInterceptor(''));
+        this.http.interceptors.push(new ADBaseUrlHttpInterceptor('https://raw.githubusercontent.com/ahmaddehnavi/json/master/'));
         this.http.interceptors.push({
             name: 'add-token',
             intercept(chain: Chain<Response, DefaultRequestConfigType>) {
@@ -53,10 +53,10 @@ export class ApiService extends BaseService {
 
     }
 
-    protected fetch<T>(req: ADRequestOptions<DefaultRequestConfigType>): Resource<T> {
-        return Resource.form(() => this.http.process(req)
+    protected fetch<T>(req: ADRequestOptions<DefaultRequestConfigType>) {
+        return this.http.process(req)
             .then(res => res.body())
-            .then(body => body.json())
+            .then(body => body.json()
         )
     }
 
@@ -66,8 +66,11 @@ export class ApiService extends BaseService {
     //                                                      //
     //////////////////////////////////////////////////////////
 
-    getTestImages() {
-        return this.fetch(ADRequest.get('https://www.google.com/404'))
+
+    getFameList() {
+        return this.fetch(ADRequest.get('test-list'))
     }
+
+    public fameListApi = Resource.form(() => this.getFameList())
 }
 
