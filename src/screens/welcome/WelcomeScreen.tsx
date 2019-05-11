@@ -1,23 +1,12 @@
-import {
-    Button,
-    Col,
-    DIInject,
-    INavigationService,
-    InjectedNavigationServiceProps,
-    InjectedThemeServiceProps,
-    MultiBackHandler,
-    Row,
-    Screen
-} from '@shared';
+import {DIInject, INavigationService, InjectedNavigationServiceProps, InjectedThemeServiceProps, RandomUtil} from '@shared';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
-import {BackHandler, ImageSourcePropType, StyleSheet, View} from 'react-native';
-import {Image as AnimatedImage} from 'react-native-animatable';
-import {TextField} from 'react-native-material-textfield';
+import {BackHandler, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets/Assets';
 import {SoundUtil} from '../../utils/SoundUtil';
 import {FameListScreen} from '../fame-list/FameListScreen';
+import {WelcomeComponent} from './WelcomeComponent';
 
 type WelcomeScreenProps =
     InjectedNavigationServiceProps &
@@ -25,7 +14,13 @@ type WelcomeScreenProps =
 
 
 type State = {
-    currentAnimationIndex: number
+    activeAnimationIndex: number
+    numberValue: number
+}
+
+type AnimationData = {
+    image: ImageSourcePropType
+    animationName: string
 }
 
 @DIInject('$navigation', '$theme')
@@ -37,28 +32,27 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps, State> {
         nav.navigate(this.ROUTE_NAME);
     }
 
+    static resetTo(nav: INavigationService) {
+        nav.reset(this.ROUTE_NAME);
+    }
+
     state = {
-        currentAnimationIndex: 0
+        activeAnimationIndex: 0,
+        numberValue: 1
     };
 
-    images = [
-        Assets.images.gif_1,
-        Assets.images.gif_2,
-        Assets.images.gif_3,
-        Assets.images.gif_4,
-        Assets.images.gif_5,
-    ];
-    animations = [
-        'fadeIn',
-        'zoomIn',
-        'slideInLeft',
-        'slideInRight',
-        'bounce',
+    animations: Array<AnimationData> = [
+        {animationName: 'fadeIn', image: Assets.images.gif_1},
+        {animationName: 'zoomIn', image: Assets.images.gif_2},
+        {animationName: 'slideInLeft', image: Assets.images.gif_3},
+        {animationName: 'slideInRight', image: Assets.images.gif_4},
+        {animationName: 'bounce', image: Assets.images.gif_5},
     ];
 
     protected animationChangerIntervalId;
 
     componentDidMount() {
+        // change animation every 5 second
         this.animationChangerIntervalId = setInterval(this.showNextAnimation, 5000)
     }
 
@@ -68,32 +62,51 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps, State> {
 
     @autobind
     showNextAnimation() {
+        // set next animation as active (loop)
         this.setState({
-            currentAnimationIndex: (this.state.currentAnimationIndex + 1) % this.images.length
+            activeAnimationIndex: (this.state.activeAnimationIndex + 1) % this.animations.length
         })
     }
 
     render() {
+        let activeAnimation = this.animations[this.state.activeAnimationIndex];
         return (
             <WelcomeComponent
                 onBackPress={this.handleBackPress}
                 onRandomisePress={this.handleRandomisePress}
                 oSavePress={this.handleSavePress}
-                image={this.images[this.state.currentAnimationIndex]}
+                onNumberChanged={this.handleNumberChanged}
+                numberValue={String(this.state.numberValue)}
+                animation={activeAnimation.animationName}
+                image={activeAnimation.image}
                 $theme={this.props.$theme}
-                animation={this.animations[this.state.currentAnimationIndex]}
             />
         )
     }
 
     @autobind
-    handleSavePress() {
+    handleNumberChanged(num: string) {
+        this.setState({
+            numberValue: Number(num),
+        })
+    }
 
+    @autobind
+    handleSavePress() {
+        // randomise animations based on number value
+        let shuffleRate = Number(this.state.numberValue) / 10 || .5;
+        this.animations = this.animations.sort(_ => {
+            return Math.random() > shuffleRate ? -1 : 1
+        });
+        // update current animation based on new animation list
+        this.showNextAnimation();
     }
 
     @autobind
     handleRandomisePress() {
-
+        this.setState({
+            numberValue: RandomUtil.randomInt(0, 9)
+        })
     }
 
     @autobind
@@ -108,72 +121,3 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps, State> {
         }
     }
 }
-
-type WelcomeComponentProps =
-    InjectedThemeServiceProps &
-    {
-    oSavePress: () => void
-    onRandomisePress: () => void
-        onBackPress: (count: number) => void | boolean
-        image: ImageSourcePropType
-        animation?: string
-}
-
-function WelcomeComponent(props: WelcomeComponentProps) {
-    // let styles = makeStyle(props.$theme);
-    return (
-        <Screen style={styles.container}>
-            <AnimatedImage
-                animation={props.animation}
-                duration={2500}
-                delay={150}
-                style={{flex: 1, width: '90%'}}
-                resizeMode={'contain'}
-                source={props.image}
-            />
-            <Col style={{
-                paddingHorizontal: props.$theme.dimens.screen.paddingHorizontal,
-                paddingVertical: props.$theme.dimens.screen.paddingVertical,
-                backgroundColor: '#fff'
-            }}>
-                <TextField
-                    label={'Enter a number'}
-                    style={styles.textInput}
-                    keyboardType={'numeric'}
-                />
-
-                <Row>
-                    <Button
-                        style={{flex: 1}}
-                        title={'Save'}
-                        onPress={props.oSavePress}
-                        filled
-                        accent
-                    />
-                    <View style={{width: 16}}/>
-                    <Button
-                        style={{flex: 1}}
-                        title={'Randomise'}
-                        onPress={props.onRandomisePress}
-                        accent
-                        outlined
-                    />
-                </Row>
-            </Col>
-            <MultiBackHandler
-                timeout={500}
-                maxCount={2}
-                onPress={props.onBackPress}/>
-        </Screen>
-    )
-
-}
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'stretch',
-        justifyContent: 'center'
-    },
-    textInput: {}
-
-});
