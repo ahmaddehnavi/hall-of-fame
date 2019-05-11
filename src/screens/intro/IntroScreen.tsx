@@ -1,17 +1,17 @@
-import {Col, INavigationService, DIInject, InjectedNavigationServiceProps, Screen, Touchable} from '@shared';
+import {DIInject, INavigationService, InjectedNavigationServiceProps, InjectedThemeServiceProps} from '@shared';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
-import {InjectedApiServiceProps} from '../../services/api/ApiService';
+import {StyleSheet} from 'react-native';
+import Assets from '../../assets/Assets';
 import {WelcomeScreen} from '../welcome/WelcomeScreen';
-
-import AppIntroSlider from 'react-native-app-intro-slider';
+import {IntroComponent} from './IntroComponent';
 
 export type IntroScreenProps =
-    InjectedNavigationServiceProps
+    InjectedNavigationServiceProps &
+    InjectedThemeServiceProps
 
-@DIInject('$navigation')
+@DIInject('$navigation', '$theme')
 @observer
 export class IntroScreen extends React.Component<IntroScreenProps> {
     static readonly ROUTE_NAME = 'IntroScreen';
@@ -24,34 +24,46 @@ export class IntroScreen extends React.Component<IntroScreenProps> {
         nav.reset(this.ROUTE_NAME);
     }
 
+    slides: Array<{ key, image, backgroundColor: string }> = [
+        {
+            key: 'slide1',
+            image: Assets.images.gif_1,
+            backgroundColor: '#00b8d4',
+        },
+        {
+            key: 'slide2',
+            image: Assets.images.gif_2,
+            backgroundColor: '#64dd17',
+        },
+        {
+            key: 'slide13',
+            image: Assets.images.gif_3,
+            backgroundColor: '#ffd600',
+        },
+        {
+            key: 'slide14',
+            image: Assets.images.gif_4,
+            backgroundColor: '#ff6d00',
+        },
+        {
+            key: 'slide15',
+            image: Assets.images.gif_5,
+            backgroundColor: '#ff0000',
+        }
+    ];
+
     @autobind
     handleOnPress() {
-        WelcomeScreen.start(this.props.$navigation);
+        WelcomeScreen.resetTo(this.props.$navigation);
     }
 
     render() {
         return (
             <IntroComponent
-                onPress={this.handleOnPress}
+                onDonePress={this.handleOnPress}
+                slides={this.slides}
             />
         )
     }
 }
 
-
-function IntroComponent(props: { onPress: () => void }) {
-    return (
-        <Screen>
-            <Col style={styles.container}>
-                <Text>IntroScreen</Text>
-            </Col>
-        </Screen>
-    )
-}
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});

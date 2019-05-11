@@ -81,11 +81,11 @@ export class Button extends React.Component<ButtonProps, State> {
 
         let btnStyles = this.createButtonStyle();
 
-        if (shadow) {
+        if (shadow && this.props.$theme) {
             if (this.state.isPressed) {
-                btnStyles.push(this.props.$theme!.styles.boxShadowBottomLight);
+                btnStyles.push(this.props.$theme.styles.boxShadowBottomLight);
             } else {
-                btnStyles.push(this.props.$theme!.styles.boxShadowBottom)
+                btnStyles.push(this.props.$theme.styles.boxShadowBottom)
             }
         }
 
@@ -200,7 +200,6 @@ export class Button extends React.Component<ButtonProps, State> {
     }
 
 }
-
 
 const styles = StyleSheet.create({
     button: {
