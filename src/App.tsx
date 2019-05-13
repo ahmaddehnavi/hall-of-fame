@@ -1,11 +1,13 @@
-import {DIProvider, NavigationService} from '@shared';
+import {NavigationService} from '@shared';
 import {Provider} from 'mobx-react';
 import React from 'react';
 import {I18nManager} from 'react-native';
-import {ThemeService} from '../@shared/services/theme/ThemeService';
+import {ThemeService} from '@shared';
 import AppNavigator from './screens/AppNavigator';
 import {ApiService} from './services/api/ApiService';
 import {IntroService} from './services/intro/IntroService';
+
+import {WelcomeStore} from './stores/WelcomeStore';
 
 
 export default class App extends React.Component {
@@ -15,6 +17,10 @@ export default class App extends React.Component {
         [IntroService.NAME]: new IntroService(),
         [ApiService.NAME]: new ApiService(),
         [ThemeService.NAME]: new ThemeService(),
+    };
+
+    protected stores = {
+        [WelcomeStore.NAME]: new WelcomeStore()
     };
 
     constructor(p) {
@@ -51,7 +57,7 @@ export default class App extends React.Component {
         let nav = this.services[NavigationService.NAME];
 
         return (
-            <Provider {...this.services}>
+            <Provider {...this.services} {...this.stores}>
                 <AppNavigator
                     ref={(ref) => {
                         if (ref) {

@@ -4,7 +4,6 @@ import {Col} from '../layout/Col';
 
 export type ScreenProps = ViewProps & {
     children: React.ReactNode
-    onBackPress?: () => void
 }
 
 /**

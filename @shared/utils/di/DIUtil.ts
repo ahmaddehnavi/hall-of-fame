@@ -1,5 +1,5 @@
 import {Logger} from 'ad-logger';
-import {inject, IReactComponent, IWrappedComponent, Provider} from 'mobx-react';
+import {inject, Provider} from 'mobx-react';
 
 type ServiceName = '$navigation' | string
 

@@ -1,73 +1,15 @@
-import {action, observable} from 'mobx';
+import autobind from 'autobind-decorator';
+import {BaseResource} from './BaseResource';
 
-export type ResourceState = 'none' | 'loading' | 'success' | 'error';
+@autobind
+export class Resource<ReqType, DataType, ErrorType = any>
+    extends BaseResource <ReqType, DataType, ErrorType, undefined> {
 
-export class Resource<DataType, ErrorType = any> {
-
-    static form<T, E = any>(loader: () => Promise<T>) {
-        return new Resource<T, E>(loader);
+    static form<ReqType, DataType, ErrorType = any>(loader: (req: ReqType) => Promise<DataType>) {
+        return new Resource<ReqType, DataType, ErrorType>(loader);
     }
 
-    @observable.ref
-    protected _state: ResourceState = 'none';
-
-    @observable.ref
-    protected _data: DataType | undefined;
-
-    @observable.ref
-    protected _error: ErrorType | undefined;
-
-    protected readonly _loader: () => Promise<DataType>;
-
-    public constructor(loader: () => Promise<DataType>) {
-        this._loader = loader
+    async load(req: ReqType): Promise<void> {
+        return super.load(req, undefined);
     }
-
-    @action
-    async load() {
-        this.updateState('loading');
-        try {
-            this._data = await this._loader();
-            this.updateState('success');
-        } catch (e) {
-            this._error = e;
-            this.updateState('error');
-        }
-    }
-
-    get state() {
-        return this._state;
-    }
-
-    get data() {
-        return this._data;
-    }
-
-    get error() {
-        return this._error;
-    }
-
-    @action
-    protected updateState(state: ResourceState) {
-        this._state = state;
-    }
-
-    get isLoading() {
-        return this.state === 'loading'
-    }
-
-    get isError() {
-        return this.state === 'error'
-    }
-
-    get isSuccess() {
-        return this.state === 'success'
-    }
-
-
-    get isNone() {
-        return this.state === 'none'
-    }
-
-
 }

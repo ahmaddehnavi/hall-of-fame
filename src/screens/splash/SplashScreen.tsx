@@ -1,21 +1,21 @@
-import {AsyncUtil, InjectedNavigationServiceProps, Screen} from '@shared';
+import {AsyncUtil, InjectedNavigationServiceProps, NavigationService, Screen} from '@shared';
 import {inject, observer} from 'mobx-react';
 import React from 'react';
 import {ActivityIndicator, StyleSheet, Text} from 'react-native';
-import {InjectedIntroServiceProps} from 'src/services/intro/IntroService';
+import {InjectedIntroServiceProps} from '../../services/intro/IntroService';
 import {FameListScreen} from '../fame-list/FameListScreen';
 import {IntroScreen} from '../intro/IntroScreen';
 
 type Props = InjectedIntroServiceProps & InjectedNavigationServiceProps
 
-@inject('$navigation', '$intro')
+@inject(NavigationService.NAME, '$intro')
 @observer
 export class SplashScreen extends React.Component<Props> {
     static readonly ROUTE_NAME = 'SplashScreen';
 
     async componentDidMount() {
         let enabled = await this.props.$intro.isIntroEnabled();
-        await this.props.$intro.setIntroEnabled(true);
+        await this.props.$intro.setIntroEnabled(false);
         await AsyncUtil.wait(100);
         if (enabled) {
             IntroScreen.resetTo(this.props.$navigation)

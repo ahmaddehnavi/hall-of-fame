@@ -1,19 +1,29 @@
-import {Col, MultiBackHandler, Resource, Screen} from '@shared';
+import {FlatList, ListResource, MultiBackHandler, Screen} from '@shared';
 import autobind from 'autobind-decorator';
+import {toJS} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component} from 'react';
-import {FlatList, Text, StyleSheet, Image} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {FameItemModel} from '../../models/FameItemModel';
 
 type FameListComponentProps = {
     onBackPress: (count: number) => void | boolean | Promise<void>
-    listResource: Resource<Array<FameItemModel>>
+    listResource: ListResource<{}, FameItemModel>
 }
 
 @observer
 export class FameListComponent extends Component<FameListComponentProps> {
     render() {
-        let data = this.props.listResource.data || [];
+        let data = toJS(this.props.listResource.items) || [];
+        let sheldonCooperIndex = data.findIndex(item => item.id === 'sheldon_cooper');
+        if (sheldonCooperIndex >= 0) {
+            let sheldonCooper = data[sheldonCooperIndex];
+            // remove sheldon cooper from old position
+            data.splice(sheldonCooperIndex, 1);
+            // insert  sheldon cooper into 3 position
+            data.splice(2, 0, sheldonCooper);
+        }
+
         return (
             <Screen style={styles.container}>
                 <FlatList
@@ -23,21 +33,11 @@ export class FameListComponent extends Component<FameListComponentProps> {
                     contentContainerStyle={{
                         padding: '5%'
                     }}
+                    resource={this.props.listResource}
                     data={data}
                     renderItem={this.renderItem}
                 />
-                {
-                    this.props.listResource.isError &&
-                    <Col style={{
-                        backgroundColor: 'rgba(255,255,255,.5)',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                        <Text>
-                            {this.props.listResource.error}
-                        </Text>
-                    </Col>
-                }
+
                 <MultiBackHandler
                     timeout={500}
                     maxCount={2}
@@ -51,6 +51,7 @@ export class FameListComponent extends Component<FameListComponentProps> {
     renderItem({item, index}: { item: FameItemModel, index: number }) {
         return (
             <Image
+                key={index}
                 source={{uri: item.photo}}
                 resizeMode={'cover'}
                 style={{

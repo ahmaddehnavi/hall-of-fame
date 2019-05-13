@@ -1,6 +1,7 @@
-import {Button, Col, InjectedThemeServiceProps, MultiBackHandler, Row, Screen} from '@shared';
+import {Button, Col, InjectedThemeServiceProps, Row} from '@shared';
+import autobind from 'autobind-decorator';
 import React, {Component} from 'react';
-import {ImageSourcePropType, StyleSheet, View} from 'react-native';
+import {ImageSourcePropType, StyleProp, View, ViewStyle} from 'react-native';
 import {Image as AnimatedImage} from 'react-native-animatable';
 import {TextField} from 'react-native-material-textfield';
 
@@ -8,18 +9,34 @@ type WelcomeComponentProps =
     InjectedThemeServiceProps & {
     oSavePress: () => void
     onRandomisePress: () => void
-    onBackPress: (count: number) => void | boolean
-    image: ImageSourcePropType
+    image?: ImageSourcePropType
     animation?: string
-    onNumberChanged: (num: string) => void
-    numberValue: string
+    onNumberChanged: (num: number) => void
+    inputValue: string
+    style?: StyleProp<ViewStyle>
+
+    buttonSaveTitle?: string
+    buttonRandomiseTitle?: string
+    inputLabel?: string
 }
 
 
 export class WelcomeComponent extends Component<WelcomeComponentProps> {
+
+    static defaultProps: Partial<WelcomeComponentProps> = {
+        buttonSaveTitle: 'Save',
+        buttonRandomiseTitle: 'Randomise',
+        inputLabel: 'Enter a number'
+    };
+
+    @autobind
+    handleTextChanged(num: string) {
+        this.props.onNumberChanged(Number(num))
+    }
+
     render() {
         return (
-            <Screen style={styles.container}>
+            <Col style={[{flex: 1}, this.props.style]}>
                 {
                     !!this.props.image &&
                     <AnimatedImage
@@ -37,10 +54,9 @@ export class WelcomeComponent extends Component<WelcomeComponentProps> {
                     backgroundColor: '#fff'
                 }}>
                     <TextField
-                        onChangeText={this.props.onNumberChanged}
-                        value={this.props.numberValue}
-                        label={'Enter a number'}
-                        style={styles.textInput}
+                        onChangeText={this.handleTextChanged}
+                        value={this.props.inputValue}
+                        label={this.props.inputLabel}
                         keyboardType={'numeric'}
                         maxLength={1}
                     />
@@ -48,7 +64,7 @@ export class WelcomeComponent extends Component<WelcomeComponentProps> {
                     <Row>
                         <Button
                             style={{flex: 1}}
-                            title={'Save'}
+                            title={this.props.buttonSaveTitle}
                             onPress={this.props.oSavePress}
                             filled
                             accent
@@ -56,28 +72,14 @@ export class WelcomeComponent extends Component<WelcomeComponentProps> {
                         <View style={{width: 16}}/>
                         <Button
                             style={{flex: 1}}
-                            title={'Randomise'}
+                            title={this.props.buttonRandomiseTitle}
                             onPress={this.props.onRandomisePress}
                             accent
                             outlined
                         />
                     </Row>
                 </Col>
-                <MultiBackHandler
-                    timeout={500}
-                    maxCount={2}
-                    onPress={this.props.onBackPress}/>
-            </Screen>
+            </Col>
         )
     }
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'stretch',
-        justifyContent: 'center'
-    },
-    textInput: {}
-
-});

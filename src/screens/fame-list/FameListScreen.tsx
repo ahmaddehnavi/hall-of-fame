@@ -28,13 +28,13 @@ export class FameListScreen extends React.Component<FameListScreenProps> {
     }
 
     componentDidMount(): void {
-        this.props.$api.fameListApi.load()
+        this.props.$api.fameListResource.loadFirstPage()
     }
 
     render() {
         return (
             <FameListComponent
-                listResource={this.props.$api.fameListApi}
+                listResource={this.props.$api.fameListResource}
                 onBackPress={this.handleBackPress}/>
         )
     }

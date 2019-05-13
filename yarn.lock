@@ -882,9 +882,9 @@ acorn@^6.0.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
 
-ad-http@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/ad-http/-/ad-http-0.0.3.tgz#620099408136e79ae6c9355b3921f7c11c9f67ca"
+ad-http@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/ad-http/-/ad-http-0.0.4.tgz#245f5c0e439ff74b1bfff2ee3d5958bb3b1093c5"
   dependencies:
     ad-logger "0.0.10"
     autobind-decorator "^2.4.0"

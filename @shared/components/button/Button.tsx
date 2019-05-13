@@ -119,8 +119,8 @@ export class Button extends React.Component<ButtonProps, State> {
 
     get color() {
         let color = this.props.color;
-        let colors = this.props.$theme!.colors;
-        if (!color) {
+        let colors = this.props.$theme && this.props.$theme.colors;
+        if (!color && colors) {
             if (this.props.accent) {
                 color = colors.accentColor
             } else if (this.props.primary) {
@@ -134,8 +134,8 @@ export class Button extends React.Component<ButtonProps, State> {
 
     get textColor() {
         let textColor = this.props.color;
-        let colors = this.props.$theme!.colors;
-        if (!textColor) {
+        let colors = this.props.$theme && this.props.$theme.colors;
+        if (!textColor && colors) {
             if (this.props.accent) {
                 textColor = colors.accentTextColor
             } else if (this.props.primary) {
@@ -168,8 +168,7 @@ export class Button extends React.Component<ButtonProps, State> {
             style = {color: this.textColor}
         } else if (this.props.outlined) {
             style = {color: this.color || this.textColor}
-        }
-        if (this.props.borderLess) {
+        } else if (this.props.borderLess) {
             style = {borderColor: this.color || this.textColor}
         }
         return [styles.title, style, this.props.textStyle]

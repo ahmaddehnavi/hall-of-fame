@@ -1,13 +1,23 @@
 import {RandomUtil} from './RandomUtil';
 
 it('should generate random int', () => {
-    let result = [0, 0, 0, 0, 0];
-    for (let i = 0; i < 10000; i++) {
-        result[RandomUtil.randomInt(0, 4)] = 1;
-        if (result.findIndex(_ => _ === 0) === -1) {
+    let isValid = true;
+    for (let i = 0; i < 100; i++) {
+        let rnd = RandomUtil.randomInt(1, 5);
+        if (rnd < 1) {
+            isValid = false;
+        }
+        if (rnd > 5) {
+            isValid = false;
+        }
+        if (!Number.isInteger(rnd)) {
+            isValid = false;
+        }
+
+        if (!isValid) {
             break;
         }
     }
 
-    expect(result.filter(_ => _ === 0)).toHaveLength(0);
+    expect(isValid).toBeTruthy();
 });
