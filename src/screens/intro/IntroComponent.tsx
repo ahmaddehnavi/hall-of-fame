@@ -19,7 +19,7 @@ export class IntroComponent extends Component<Props> {
         return (
             <Image
                 key={item.backgroundColor}
-                style={{width: '90%', flex: 1}}
+                style={{width: '90%', marginHorizontal: '5%', flex: 1}}
                 resizeMode={'contain'}
                 source={item.image}
             />

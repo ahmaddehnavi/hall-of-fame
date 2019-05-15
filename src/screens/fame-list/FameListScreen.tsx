@@ -1,11 +1,10 @@
-import {DIInject, INavigationService, InjectedNavigationServiceProps, Resource} from '@shared';
+import {DIInject, INavigationService, InjectedNavigationServiceProps, NavigationService} from '@shared';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
-import {BackHandler, StyleSheet} from 'react-native';
+import {BackHandler} from 'react-native';
 import Assets from '../../assets/Assets';
-import {FameItemModel} from '../../models/FameItemModel';
-import {InjectedApiServiceProps} from '../../services/api/ApiService';
+import {ApiService, InjectedApiServiceProps} from '../../services/api/ApiService';
 import {SoundUtil} from '../../utils/SoundUtil';
 import {WelcomeScreen} from '../welcome/WelcomeScreen';
 import {FameListComponent} from './FameListComponent';
@@ -14,7 +13,7 @@ type FameListScreenProps =
     InjectedNavigationServiceProps &
     InjectedApiServiceProps
 
-@DIInject('$navigation', '$api')
+@DIInject(NavigationService.NAME, ApiService.NAME)
 @observer
 export class FameListScreen extends React.Component<FameListScreenProps> {
     static readonly ROUTE_NAME = 'FameListScreen';
@@ -27,14 +26,12 @@ export class FameListScreen extends React.Component<FameListScreenProps> {
         nav.reset(this.ROUTE_NAME);
     }
 
-    componentDidMount(): void {
-        this.props.$api.fameListResource.loadFirstPage()
-    }
 
     render() {
         return (
             <FameListComponent
-                listResource={this.props.$api.fameListResource}
+                $api={this.props.$api}
+                listResource={this.props.$api.Person.popularList}
                 onBackPress={this.handleBackPress}/>
         )
     }

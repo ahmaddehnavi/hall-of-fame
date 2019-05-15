@@ -1,29 +1,34 @@
-import {FlatList, ListResource, MultiBackHandler, Screen} from '@shared';
+import {DIInject, FlatList, ListResource, MultiBackHandler, Screen} from '@shared';
 import autobind from 'autobind-decorator';
 import {toJS} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component} from 'react';
-import {Image, StyleSheet} from 'react-native';
-import {FameItemModel} from '../../models/FameItemModel';
+import {Image, StyleSheet, Text} from 'react-native';
+import {PopularPersonItem} from '../../models/PopularPersonResponse';
+import {ApiService} from '../../services/api/ApiService';
 
 type FameListComponentProps = {
     onBackPress: (count: number) => void | boolean | Promise<void>
-    listResource: ListResource<{}, FameItemModel>
+    listResource: ListResource<{}, PopularPersonItem>
+    $api: ApiService
 }
 
 @observer
 export class FameListComponent extends Component<FameListComponentProps> {
     render() {
-        let data = toJS(this.props.listResource.items) || [];
-        let sheldonCooperIndex = data.findIndex(item => item.id === 'sheldon_cooper');
-        if (sheldonCooperIndex >= 0) {
-            let sheldonCooper = data[sheldonCooperIndex];
-            // remove sheldon cooper from old position
-            data.splice(sheldonCooperIndex, 1);
+        let items = toJS(this.props.listResource.items) || [];
+        if (items.length) {
+            let sheldonCooper: PopularPersonItem = {
+                profile_path: 'https://i.pinimg.com/originals/2e/29/c4/2e29c41787d04c4b3de4aa3832566357.jpg',
+                adult: false,
+                id: 'special',
+                known_for: [],
+                name: '',
+                popularity: 0
+            };
             // insert  sheldon cooper into 3 position
-            data.splice(2, 0, sheldonCooper);
+            items.splice(2, 0, sheldonCooper);
         }
-
         return (
             <Screen style={styles.container}>
                 <FlatList
@@ -34,8 +39,9 @@ export class FameListComponent extends Component<FameListComponentProps> {
                         padding: '5%'
                     }}
                     resource={this.props.listResource}
-                    data={data}
+                    data={items}
                     renderItem={this.renderItem}
+                    removeClippedSubviews
                 />
 
                 <MultiBackHandler
@@ -48,11 +54,11 @@ export class FameListComponent extends Component<FameListComponentProps> {
     }
 
     @autobind
-    renderItem({item, index}: { item: FameItemModel, index: number }) {
+    renderItem({item, index}: { item: PopularPersonItem, index: number }) {
         return (
             <Image
-                key={index}
-                source={{uri: item.photo}}
+                key={item.id}
+                source={{uri: this.props.$api.resolveProfileImageUrl(item.profile_path)}}
                 resizeMode={'cover'}
                 style={{
                     marginBottom: 16,

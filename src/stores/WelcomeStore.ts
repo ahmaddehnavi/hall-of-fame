@@ -3,7 +3,7 @@ import autobind from 'autobind-decorator';
 import {action, observable} from 'mobx';
 import {ImageSourcePropType} from 'react-native';
 import Assets from '../assets/Assets';
-
+import shuffleSeed from 'shuffle-seed'
 
 export type InjectedWelcomeStoreProps = {
     $welcomeStore: WelcomeStore
@@ -69,10 +69,11 @@ export class WelcomeStore {
 
     save() {
         // randomise animations based on number value
-        let shuffleRate = Number(this.numberValue) / 10 || .5;
-        this.animations = this.animations.sort(_ => {
-            return Math.random() > shuffleRate ? -1 : 1
-        });
+        // let shuffleRate = this.numberValue / 10 || .5;
+        // this.animations = this.animations.sort(_ => {
+        //     return Math.random() > shuffleRate ? -1 : 1
+        // });
+        this.animations = shuffleSeed.shuffle(this.animations, this.numberValue);
         // update current animation based on new animation list
         this.setNextAnimationAsActive();
     }

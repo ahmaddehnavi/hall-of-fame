@@ -43,7 +43,7 @@ export class WelcomeComponent extends Component<WelcomeComponentProps> {
                         animation={this.props.animation}
                         duration={2500}
                         delay={150}
-                        style={{flex: 1, width: '90%'}}
+                        style={{flex: 1, width: '90%', marginHorizontal: '5%'}}
                         resizeMode={'contain'}
                         source={this.props.image}
                     />

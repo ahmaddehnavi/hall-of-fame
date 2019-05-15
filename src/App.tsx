@@ -15,8 +15,8 @@ export default class App extends React.Component {
     protected services = {
         [NavigationService.NAME]: new NavigationService(),
         [IntroService.NAME]: new IntroService(),
-        [ApiService.NAME]: new ApiService(),
         [ThemeService.NAME]: new ThemeService(),
+        [ApiService.NAME]: new ApiService(),
     };
 
     protected stores = {

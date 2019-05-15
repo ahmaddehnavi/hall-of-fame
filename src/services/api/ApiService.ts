@@ -1,10 +1,9 @@
-import {BaseService, ListResource, ListResourceDataType} from '@shared';
-import {ADFetchClient, ADPrepareRequestInterceptor, ADRequest, ADRest, Chain, StatusCheckerHttpInterceptor} from 'ad-http';
-import {DefaultRequestConfigType} from 'ad-http/build/ADRequest';
-import ADResponseParseError from 'ad-http/build/error/ADResponseParseError';
-import ADBaseUrlHttpInterceptor from 'ad-http/build/interceptors/ADBaseUrlHttpInterceptor';
+import {ArrayUtil, BaseService, ListResource, Resource, ResponsiveUtil} from '@shared';
 import autobind from 'autobind-decorator';
-import {FameItemModel} from '../../models/FameItemModel';
+import Axios, {AxiosInstance} from 'axios';
+import {Config} from '../../Config';
+import {ApiConfigurationModel} from '../../models/ApiConfigurationModel';
+import {PopularPersonItem, PopularPersonResponse} from '../../models/PopularPersonResponse';
 
 export type InjectedApiServiceProps = {
     $api: ApiService
@@ -13,84 +12,98 @@ export type InjectedApiServiceProps = {
 @autobind
 export class ApiService extends BaseService {
     public static readonly NAME = '$api';
-    protected http: ADRest<Response>;
 
-    $init(config: {}) {
-        super.$init(config);
+    protected http: AxiosInstance;
 
-        /**
-         * all interceptors from first to last can modify request
-         * after last interceptor proceed , rest make request
-         * and all interceptors from last to first can handle or modify response
-         * then rest.process() resolve to modified response
-         *
-         * if you want throw any error from interceptors error should be extend ADHttpError
+
+    constructor() {
+        super();
+        /*
+         * create http instance with default configs
          */
-        this.http = new ADRest<Response | any>(new ADFetchClient());
-
-
-        // check for http status error
-        this.http.interceptors.push(new StatusCheckerHttpInterceptor({
-            isValid: (status) => status >= 200 && status < 300
-        }));
-
-
-        // if request use relative address then will be prefixed by this base url
-        this.http.interceptors.push(new ADBaseUrlHttpInterceptor('https://api.myjson.com/bins/'));
-
-        // modify request and add required headers
-        this.http.interceptors.push({
-            name: 'add-token',
-            intercept(chain: Chain<Response, DefaultRequestConfigType>) {
-                let newReq = chain.request.edit()
-                    .build();
-                return chain.proceed(newReq);
+        this.http = Axios.create({
+            baseURL: Config.BASE_URL,
+            params: {
+                api_key: Config.API_KEY
             }
         });
 
-        // should be after all request change
-        // fix some issue in request
-        this.http.interceptors.push(new ADPrepareRequestInterceptor());
-
     }
 
 
-    protected async fetch<T>(req: ADRequest): Promise<T> {
-        try {
-            let response = await this.http.process(req);
-            let body = await response.body();
-            return await body.json();
-        } catch (e) {
-            throw new ADResponseParseError('Error in parsing response.');
+    protected resolveProfileImageUrlCache?: (url: string) => string;
+
+    resolveProfileImageUrl(path: string, preferredSize = ResponsiveUtil.width) {
+        if (!path || path.startsWith('http://') || path.startsWith('https://')) {
+            return path;
         }
-    }
 
+        if (this.resolveProfileImageUrlCache) {
+            return this.resolveProfileImageUrlCache(path);
+        }
 
-    protected async fetchList<T>(req: ADRequest): Promise<ListResourceDataType<T>> {
-        try {
-            let response = await this.http.process(req);
-            let body = await response.body();
-            let items = await body.json();
-            return {
-                items,
-                isFinished: true, // todo use real value
-                page: 1// todo use real value
+        if (!this.resolveProfileImageUrlCache && this.Config.configuration.data) {
+            let base = this.Config.configuration.data.images.secure_base_url;
+
+            let sizes = this.Config.configuration.data.images.profile_sizes;
+            let widths = sizes.filter(it => it.startsWith('w')).map(it => Number(it.substring(1)));
+            let closestWidth = ArrayUtil.findClosestGreaterValue(widths, preferredSize);
+
+            let size;
+            if (closestWidth) {
+                size = 'w' + closestWidth
             }
-        } catch (e) {
-            throw new ADResponseParseError('Error in parsing response.');
+
+            let heights = sizes.filter(it => it.startsWith('h')).map(it => Number(it.substring(1)));
+            let closestHeight = ArrayUtil.findClosestGreaterValue(heights, preferredSize);
+            if (!closestWidth || (closestWidth < preferredSize && closestHeight > closestWidth)) {
+                size = 'h' + closestHeight;
+            }
+
+            if (!size) {
+                size = 'original';
+            }
+
+            this.resolveProfileImageUrlCache = (p) => base + size + p;
+            return base + size + path
         }
+        return path
     }
-    
+
+    // ----------------------------------------------------------------------------------------------------------
     //////////////////////////////////////////////////////////
     //                                                      //
-    //               define new api here                   //
+    //               define new api here                    //
     //                                                      //
     //////////////////////////////////////////////////////////
 
-    public fameListResource = ListResource.form<{}, FameItemModel>(async (req, {page}) => {
-        // new ADRequest.Builder().url('test-list').build()
-        return this.fetchList<FameItemModel>(ADRequest.get('https://api.myjson.com/bins/18pf6m'));
-    })
+
+    public readonly Config = {
+        configuration: Resource.form<{}, ApiConfigurationModel>(async (req) => {
+            let res = await this.http.get<ApiConfigurationModel>('/configuration');
+            return {
+                data: res.data,
+                message: res.statusText
+            }
+        })
+    };
+
+    // ----------------------------------------------------------------------------------------------------------
+
+    public readonly Person = {
+        popularList: ListResource.form<{}, PopularPersonItem>(async (req, {page}) => {
+            let res = await this.http.get<PopularPersonResponse>('/person/popular', {params: {page}});
+            return {
+                items: res.data.results,
+                message: res.statusText,
+                page: res.data.page,
+                isFinished: res.data.page >= res.data.total_pages
+            }
+        })
+    }
+
+    // ----------------------------------------------------------------------------------------------------------
+
 
 }
 

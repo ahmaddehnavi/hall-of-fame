@@ -23,7 +23,7 @@ describe('WelcomeStore Tests', () => {
         expect(store.activeAnimationIndex).toBe(1);
     });
 
-    it('should change after 1 second', async () => {
+    it('should animation change after 1 second', async () => {
         let store = new WelcomeStore();
         let oldIndex = store.activeAnimationIndex;
         store.startAnimationChanger(500);
