@@ -2,20 +2,21 @@ import autobind from 'autobind-decorator';
 import {action, computed, IObservableArray, observable} from 'mobx';
 import {BaseResource} from './BaseResource';
 
-export interface ParsedListApiResponse<ItemType> {
-    items: Array<ItemType>
-    isFinished: boolean
-    page: number
+
+export type ListResourceDataType<ItemType> = {
+    items: Array<ItemType>,
+    page: number,
+    isFinished: boolean,
     message?: string
 }
 
-export type ListResourceDataType<ItemType> = { items: Array<ItemType>, page: number, isFinished: boolean }
+type LoaderType<ReqType, ItemType> = (req: ReqType, meta: { page: number }) => Promise<ListResourceDataType<ItemType>>;
 
 @autobind
 export class ListResource<ReqType, ItemType, ErrorType = any>
-    extends BaseResource <ReqType, ListResourceDataType<ItemType>, ErrorType, { page: number }> {
+    extends BaseResource <ReqType, ListResourceDataType<ItemType>, ErrorType, { page: number }, ListResource<ReqType, ItemType, ErrorType>> {
 
-    static form<ReqType, ItemType, ErrorType = any>(loader: (req: ReqType, meta: { page: number }) => Promise<ListResourceDataType<ItemType>>) {
+    static form<ReqType, ItemType, ErrorType = any>(loader: LoaderType<ReqType, ItemType>) {
         return new ListResource<ReqType, ItemType, ErrorType>(loader);
     }
 
@@ -30,7 +31,6 @@ export class ListResource<ReqType, ItemType, ErrorType = any>
     private _request: ReqType;
 
     protected hasPendingLoadRequest: boolean;
-
 
     @action
     protected notifySuccess(info: ListResourceDataType<ItemType>) {

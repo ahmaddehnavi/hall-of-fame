@@ -4,38 +4,44 @@ import {action, observable} from 'mobx';
 export type ResourceState = 'none' | 'loading' | 'success' | 'error';
 
 @autobind
-export class BaseResource<ReqType, DataType, ErrorType = any, MetaType = never> {
+export class BaseResource<ReqType, ResponseType, ErrorType = any, MetaType = never, T = any> {
 
     @observable.ref
     protected _state: ResourceState = 'none';
 
     @observable.ref
-    protected _data: DataType | undefined;
+    protected _response: ResponseType | undefined;
 
     @observable.ref
     protected _error: ErrorType | undefined;
 
-    protected readonly _loader: (request: ReqType, meta: MetaType) => Promise<DataType>;
+    protected readonly _loader: (request: ReqType, meta: MetaType) => Promise<ResponseType>;
 
     protected _lastRequest: ReqType;
     protected _lastMeta: MetaType;
+    protected _childInstance: T;
 
-    public constructor(loader: (req: ReqType, meta: MetaType) => Promise<DataType>) {
-        this._loader = loader
+    public constructor(loader: (req: ReqType, meta: MetaType) => Promise<ResponseType>) {
+        this._loader = loader;
+    }
+
+    init(childInstance: T) {
+        this._childInstance = childInstance;
     }
 
     @action
-    async load(req: ReqType, meta: MetaType) {
+    async load(req: ReqType, meta: MetaType): Promise<T> {
         this._lastRequest = req;
         this._lastMeta = meta;
 
         this.notifyLoading();
         try {
-            let data = await this._loader(req, meta);
-            this.notifySuccess(data);
+            let response = await this._loader(req, meta);
+            this.notifySuccess(response);
         } catch (e) {
-            this.notifyError(e)
+            this.notifyError(e);
         }
+        return this._childInstance;
     }
 
     reload() {
@@ -46,8 +52,8 @@ export class BaseResource<ReqType, DataType, ErrorType = any, MetaType = never> 
         return this._state;
     }
 
-    get data() {
-        return this._data;
+    get response() {
+        return this._response;
     }
 
     get error() {
@@ -77,8 +83,8 @@ export class BaseResource<ReqType, DataType, ErrorType = any, MetaType = never> 
     }
 
     @action
-    protected notifySuccess(data: DataType) {
-        this._data = data;
+    protected notifySuccess(response: ResponseType) {
+        this._response = response;
         this._state = 'success';
     }
 
@@ -92,6 +98,6 @@ export class BaseResource<ReqType, DataType, ErrorType = any, MetaType = never> 
     reset() {
         this._state = 'none';
         this._error = undefined;
-        this._data = undefined;
+        this._response = undefined;
     }
 }

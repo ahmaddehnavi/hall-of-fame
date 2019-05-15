@@ -1,10 +1,12 @@
 import {Button, Col,} from '@shared';
+import {observer} from 'mobx-react';
 import * as React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {BaseResource} from '../../resource/BaseResource';
 
 type ADFlatListRetryProps = { resource: BaseResource<any, any>, style? };
 
+@observer
 export class FlatListRetry extends React.Component<ADFlatListRetryProps> {
     render() {
         let {resource} = this.props;
