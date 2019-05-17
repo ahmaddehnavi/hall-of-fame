@@ -6,7 +6,7 @@ import {Assets} from '../../assets/Assets';
 import shuffleSeed from 'shuffle-seed'
 
 export type InjectedWelcomeStoreProps = {
-    $welcomeStore: WelcomeStore
+    $welcomeStore: WelcomeScreenStore
 }
 
 type AnimationData = {
@@ -15,7 +15,7 @@ type AnimationData = {
 }
 
 @autobind
-export class WelcomeStore extends BaseStore<{}> {
+export class WelcomeScreenStore extends BaseStore<{}> {
 
     public static readonly NAME = '$welcomeStore';
 
@@ -82,6 +82,7 @@ export class WelcomeStore extends BaseStore<{}> {
         this.setNextAnimationAsActive();
     }
 
+    @action
     randomise() {
         this.updateNumber(RandomUtil.randomInt(0, 9))
     }

@@ -17,7 +17,10 @@ export class SplashScreen extends React.Component<Props> {
     static readonly ROUTE_NAME = 'SplashScreen';
 
     componentDidMount() {
-        this.props.$splashStore.loadConfig();
+        /**
+         * load required config
+         */
+        this.props.$splashStore.loadConfigAndNavigate();
     }
 
     render() {

@@ -2,17 +2,19 @@ import {observer} from 'mobx-react';
 import * as React from 'react';
 import {StyleSheet, Text as RNText, TextProps} from 'react-native';
 
-interface Props extends TextProps {
+type Props = TextProps & {
     bold?: boolean
+    title?: string
 }
 
 @observer
-export  class Text extends React.Component<Props> {
+export class Text extends React.Component<Props> {
     render() {
 
         return (
             <RNText
                 {...this.props}
+                children={this.props.title || this.props.children}
                 style={[this.props.bold ? styles.textBold : styles.text, this.props.style]}
             />
         )

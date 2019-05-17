@@ -4,6 +4,9 @@ export type InjectedStorageServiceProps = {
     $storage: StorageService
 }
 
+/**
+ * todo implement this service
+ */
 export class StorageService extends BaseService {
     public static readonly NAME = '$storage';
     /**

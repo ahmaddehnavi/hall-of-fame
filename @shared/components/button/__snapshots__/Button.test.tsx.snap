@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Tests should match snapshot 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        Array [
+          Object {
+            "alignItems": "center",
+            "borderRadius": 5,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginVertical": 2,
+          },
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "textAlign": "left",
+          },
+          Array [
+            Object {
+              "paddingHorizontal": 12,
+              "paddingVertical": 8,
+              "textAlign": "center",
+              "textAlignVertical": "center",
+            },
+            undefined,
+            undefined,
+          ],
+        ]
+      }
+    >
+      test
+    </Text>
+  </View>
+</View>
+`;

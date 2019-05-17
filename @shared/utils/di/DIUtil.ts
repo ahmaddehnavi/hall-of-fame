@@ -1,4 +1,3 @@
-import {Logger} from 'ad-logger';
 import {inject, Provider} from 'mobx-react';
 
 type ServiceName = '$theme' | '$navigation'|    string

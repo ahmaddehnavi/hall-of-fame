@@ -12,11 +12,11 @@ import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
 import {BackHandler, StyleSheet} from 'react-native';
-import {InjectedWelcomeStoreProps, WelcomeStore} from './WelcomeStore';
-import {SoundUtil} from '../../utils/SoundUtil';
 import {Assets} from '../../assets/Assets';
+import {SoundUtil} from '../../utils/SoundUtil';
 import {FameListScreen} from '../fame-list/FameListScreen';
 import {WelcomeComponent} from './WelcomeComponent';
+import {InjectedWelcomeStoreProps, WelcomeScreenStore} from './WelcomeScreen.store';
 
 type WelcomeScreenProps =
     InjectedNavigationServiceProps &
@@ -24,7 +24,7 @@ type WelcomeScreenProps =
     InjectedWelcomeStoreProps
 
 
-@DIInject(NavigationService.NAME, ThemeService.NAME, WelcomeStore.NAME)
+@DIInject(NavigationService.NAME, ThemeService.NAME, WelcomeScreenStore.NAME)
 @observer
 export class WelcomeScreen extends React.Component<WelcomeScreenProps> {
     static readonly ROUTE_NAME = 'WelcomeScreen';

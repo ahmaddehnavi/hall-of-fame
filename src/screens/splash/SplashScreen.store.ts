@@ -18,7 +18,7 @@ export type InjectedSplashScreenStore = {
 export class SplashScreenStore extends BaseStore<Props> {
     public static readonly NAME = '$splashStore';
 
-    loadConfig() {
+    loadConfigAndNavigate() {
         return this.props.$api.Config.configuration.load()
             .then(async (self) => {
                 if (self.isError) {
@@ -36,7 +36,9 @@ export class SplashScreenStore extends BaseStore<Props> {
                             }
                         ])
                 } else {
+                    // on first run we need to show intro screen
                     let enabled = await this.props.$intro.isIntroEnabled();
+                    // on second run we dont want to show intro screen so disable it
                     await this.props.$intro.setIntroEnabled(true);
                     await AsyncUtil.wait(100);
                     if (enabled) {

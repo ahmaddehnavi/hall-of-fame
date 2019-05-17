@@ -24,6 +24,7 @@ export class FameListScreenStore extends BaseStore<Props> {
 
     get items() {
         let items = toJS(this.popularListResource.items);
+
         if (items.length) {
             let sheldonCooper: PopularPersonItemType = {
                 profile_path: 'https://i.pinimg.com/originals/2e/29/c4/2e29c41787d04c4b3de4aa3832566357.jpg',
@@ -33,7 +34,7 @@ export class FameListScreenStore extends BaseStore<Props> {
                 name: '',
                 popularity: 0
             };
-            // insert  sheldon cooper into 3 position
+            // insert sheldon cooper into 3 position because we want to show him always in third position
             items.splice(Math.min(2, items.length), 0, sheldonCooper);
         }
         return items;
@@ -41,11 +42,13 @@ export class FameListScreenStore extends BaseStore<Props> {
 
     @autobind
     handleBackPress(pressCount: number) {
+
+        // if one back pressed in 500ms then navigate to WelcomeScreen
         if (pressCount === 1) {
             WelcomeScreen.start(this.props.$navigation);
             return;
         }
-
+        // if two back pressed in 500ms then play a sound and send app to background
         if (pressCount === 2) {
             SoundUtil.play(Assets.sounds.test)
                 .then(BackHandler.exitApp)

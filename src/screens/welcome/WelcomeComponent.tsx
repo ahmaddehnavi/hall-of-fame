@@ -63,6 +63,7 @@ export class WelcomeComponent extends Component<WelcomeComponentProps> {
 
                     <Row>
                         <Button
+                            testID={'btn-save'}
                             style={{flex: 1}}
                             title={this.props.buttonSaveTitle}
                             onPress={this.props.oSavePress}
@@ -71,6 +72,7 @@ export class WelcomeComponent extends Component<WelcomeComponentProps> {
                         />
                         <View style={{width: 16}}/>
                         <Button
+                            testID={'btn-randomise'}
                             style={{flex: 1}}
                             title={this.props.buttonRandomiseTitle}
                             onPress={this.props.onRandomisePress}

@@ -1,8 +1,7 @@
 import {Resource} from '@shared';
 import {observer} from 'mobx-react';
 import * as React from 'react';
-import {StyleProp, UIManager, ViewProps, ViewStyle} from 'react-native';
-import {View} from 'react-native-animatable';
+import {StyleProp, ViewProps, ViewStyle} from 'react-native';
 import {ErrorView} from '../error/ErrorView';
 import {LoadingView} from '../loading/LoadingView';
 
@@ -17,7 +16,7 @@ type AsyncViewProps<Req, DataType> = Partial<ViewProps> & {
     ErrorComponent?: ComponentWithProps<Req, DataType>
     LoadingComponent?: ComponentWithProps<Req, DataType>
     SuccessComponent?: ComponentWithProps<Req, DataType>
-    children?: ComponentWithProps<Req, DataType> | ((res: Resource<Req, DataType>) => React.ReactNode)
+    children?: ComponentWithProps<Req, DataType> | React.ReactNode | ((res: Resource<Req, DataType>) => React.ReactNode)
 };
 
 @observer
@@ -68,6 +67,9 @@ export class AsyncView<Req, DataType> extends React.Component<AsyncViewProps<Req
             )
         }
 
+        if (typeof this.props.children === 'function' && this.props.resource) {
+            return (this.props.children as any)(this.props.resource)
+        }
         if (SuccessComponent) {
             return <SuccessComponent
                 resource={resource}
