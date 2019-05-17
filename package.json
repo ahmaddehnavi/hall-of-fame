@@ -6,7 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start --port 1111",
     "kill-port": "npx kill-port 1111",
     "test": "jest --maxWorkers=4 --forceExit",
-    "citest": "jest -u --maxWorkers=4 --forceExit",
+    "testci": "jest -u --maxWorkers=4 --forceExit",
+    "test:coverage": "npm test -- --coverage",
+    "test:badges": "npm run test:coverage  && jest-coverage-badges",
     "remotedev": "remotedev --hostname=localhost --port=8000 --injectserver=reactnative"
   },
   "dependencies": {
@@ -44,6 +46,7 @@
     "babel-jest": "^24.8.0",
     "eslint-plugin-react": "^7.13.0",
     "jest": "^24.8.0",
+    "jest-coverage-badges": "^1.1.2",
     "metro-react-native-babel-preset": "^0.54.0",
     "mobx-remotedev": "^0.3.6",
     "mock-async-storage": "^2.1.0",
