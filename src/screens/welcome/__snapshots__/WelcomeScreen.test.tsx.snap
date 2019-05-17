@@ -204,6 +204,7 @@ exports[`renders correctly 1`] = `
               "opacity": 1,
             }
           }
+          testID="btn-save"
         >
           <View
             style={
@@ -275,6 +276,7 @@ exports[`renders correctly 1`] = `
               "opacity": 1,
             }
           }
+          testID="btn-randomise"
         >
           <View
             style={

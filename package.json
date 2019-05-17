@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "node node_modules/react-native/local-cli/cli.js start --port 1111",
+    "kill-port": "npx kill-port 1111",
     "test": "jest --maxWorkers=4 --forceExit",
     "citest": "jest -u --maxWorkers=4 --forceExit",
     "remotedev": "remotedev --hostname=localhost --port=8000 --injectserver=reactnative"

@@ -92,9 +92,9 @@ export class FlatList<ItemType> extends React.Component<EXFlatListProps<ItemType
                 keyExtractor={this.keyExtractor}
                 data={resource ? toJS(resource.items) : []}
                 refreshing={resource ? resource.isFirstLoadInProgress : undefined}
-                onRefresh={this.onRefresh}
-                onEndReached={this.onEndReached}
-                onEndReachedThreshold={.7}
+                onRefresh={resource ? this.onRefresh : undefined}
+                onEndReached={resource ? this.onEndReached : undefined}
+                onEndReachedThreshold={resource ? .7 : undefined}
                 {...listProps}
             />
         );

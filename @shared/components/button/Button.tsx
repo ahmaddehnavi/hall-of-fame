@@ -92,6 +92,7 @@ export class Button extends React.Component<ButtonProps, State> {
         return (
             <Touchable
                 {...otherProps}
+                testID={this.props.testID}
                 onPress={this.onPress}
                 onPressIn={this.handlePressIn}
                 onPressOut={this.handlePressOut}

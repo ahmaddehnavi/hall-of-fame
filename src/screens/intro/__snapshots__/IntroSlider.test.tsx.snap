@@ -1,0 +1,435 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "rgba(0, 184, 212, 1)",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <RCTScrollView
+      bounces={false}
+      data={
+        Array [
+          Object {
+            "backgroundColor": "#00b8d4",
+            "image": "",
+          },
+          Object {
+            "backgroundColor": "#64dd17",
+            "image": "",
+          },
+          Object {
+            "backgroundColor": "#ffd600",
+            "image": "",
+          },
+          Object {
+            "backgroundColor": "#ff6d00",
+            "image": "",
+          },
+          Object {
+            "backgroundColor": "#ff0000",
+            "image": "",
+          },
+        ]
+      }
+      disableVirtualization={false}
+      extraData={750}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={true}
+      initialNumToRender={10}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onDone={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      paginationStyle={null}
+      pagingEnabled={true}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      showDoneButton={true}
+      showNextButton={true}
+      showsHorizontalScrollIndicator={false}
+      slides={
+        Array [
+          Object {
+            "backgroundColor": "#00b8d4",
+            "image": "",
+          },
+          Object {
+            "backgroundColor": "#64dd17",
+            "image": "",
+          },
+          Object {
+            "backgroundColor": "#ffd600",
+            "image": "",
+          },
+          Object {
+            "backgroundColor": "#ff6d00",
+            "image": "",
+          },
+          Object {
+            "backgroundColor": "#ff0000",
+            "image": "",
+          },
+        ]
+      }
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        }
+      }
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 1334,
+                "width": 750,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source=""
+              style={
+                Object {
+                  "flex": 1,
+                  "marginHorizontal": "5%",
+                  "width": "90%",
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 1334,
+                "width": 750,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source=""
+              style={
+                Object {
+                  "flex": 1,
+                  "marginHorizontal": "5%",
+                  "width": "90%",
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 1334,
+                "width": 750,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source=""
+              style={
+                Object {
+                  "flex": 1,
+                  "marginHorizontal": "5%",
+                  "width": "90%",
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 1334,
+                "width": 750,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source=""
+              style={
+                Object {
+                  "flex": 1,
+                  "marginHorizontal": "5%",
+                  "width": "90%",
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 1334,
+                "width": 750,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source=""
+              style={
+                Object {
+                  "flex": 1,
+                  "marginHorizontal": "5%",
+                  "width": "90%",
+                }
+              }
+            />
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        Array [
+          Object {
+            "bottom": 16,
+            "left": 16,
+            "position": "absolute",
+            "right": 16,
+          },
+          null,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "height": 16,
+            "justifyContent": "center",
+            "margin": 16,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(255, 255, 255, .9)",
+              "borderRadius": 5,
+              "height": 10,
+              "marginHorizontal": 4,
+              "opacity": 1,
+              "width": 10,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, .2)",
+              "borderRadius": 5,
+              "height": 10,
+              "marginHorizontal": 4,
+              "opacity": 1,
+              "width": 10,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, .2)",
+              "borderRadius": 5,
+              "height": 10,
+              "marginHorizontal": 4,
+              "opacity": 1,
+              "width": 10,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, .2)",
+              "borderRadius": 5,
+              "height": 10,
+              "marginHorizontal": 4,
+              "opacity": 1,
+              "width": 10,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, .2)",
+              "borderRadius": 5,
+              "height": 10,
+              "marginHorizontal": 4,
+              "opacity": 1,
+              "width": 10,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "position": "absolute",
+            "right": 0,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 18,
+                  "padding": 12,
+                },
+                null,
+              ]
+            }
+          >
+            Next
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

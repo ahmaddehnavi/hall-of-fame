@@ -1,4 +1,4 @@
-import {DEFAULT_THEME, ThemeType} from '@shared';
+import {DeepPartial, DEFAULT_THEME, ThemeType} from '@shared';
 import autobind from 'autobind-decorator';
 import deepmerge from 'deepmerge';
 import {action, observable} from 'mobx';
@@ -7,6 +7,9 @@ import {BaseService} from '../base/BaseService';
 export type InjectedThemeServiceProps = {
     $theme: ThemeService
 }
+// type DeepPartial<T> = {
+//     [P in keyof T]?: DeepPartial<T[P]>;
+// }
 
 @autobind
 export class ThemeService extends BaseService<{}> {
@@ -17,8 +20,8 @@ export class ThemeService extends BaseService<{}> {
     protected _configs: ThemeType = DEFAULT_THEME;
 
     @action
-    merge(config: ThemeType) {
-        this._configs = deepmerge(this._configs, config);
+    merge(config: DeepPartial<ThemeType>) {
+        this._configs = deepmerge(this._configs, config as any);
     }
 
     get() {

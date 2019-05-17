@@ -9,6 +9,9 @@ export class IntroService extends BaseService {
     public static readonly NAME = '$intro';
     public static readonly IS_INTRO_ENABLED_KEY = '$intro/is-enabled';
 
+    /***
+     *  default value is true
+     */
     async isIntroEnabled() {
         try {
             return await AsyncStorage.getItem(IntroService.IS_INTRO_ENABLED_KEY) === 'true';

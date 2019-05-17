@@ -176,5 +176,13 @@ do not bind react component class because may override lifecycle binding
  for more info [@see mobx docs](https://mobx.js.org/)
  
  
- # npm or yarn
+ # npm or yarn ?
  we use yarn as package manager
+ 
+ 
+ # type or interface ?
+ 
+we prefer type unless you really need interface (need to be implemented)
+*  if you want describe some `model` use `type`
+* if you want some class implement your model use `interface` 
+(interface name should be started with capital `I`)
