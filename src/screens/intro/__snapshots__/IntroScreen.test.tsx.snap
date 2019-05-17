@@ -23,27 +23,22 @@ exports[`renders correctly 1`] = `
           Object {
             "backgroundColor": "#00b8d4",
             "image": "",
-            "key": "slide1",
           },
           Object {
             "backgroundColor": "#64dd17",
             "image": "",
-            "key": "slide2",
           },
           Object {
             "backgroundColor": "#ffd600",
             "image": "",
-            "key": "slide13",
           },
           Object {
             "backgroundColor": "#ff6d00",
             "image": "",
-            "key": "slide14",
           },
           Object {
             "backgroundColor": "#ff0000",
             "image": "",
-            "key": "slide15",
           },
         ]
       }
@@ -76,27 +71,22 @@ exports[`renders correctly 1`] = `
           Object {
             "backgroundColor": "#00b8d4",
             "image": "",
-            "key": "slide1",
           },
           Object {
             "backgroundColor": "#64dd17",
             "image": "",
-            "key": "slide2",
           },
           Object {
             "backgroundColor": "#ffd600",
             "image": "",
-            "key": "slide13",
           },
           Object {
             "backgroundColor": "#ff6d00",
             "image": "",
-            "key": "slide14",
           },
           Object {
             "backgroundColor": "#ff0000",
             "image": "",
-            "key": "slide15",
           },
         ]
       }

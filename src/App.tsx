@@ -9,7 +9,7 @@ import {IntroService} from './services/intro/IntroService';
 import {createAllStore} from './stores/Stores';
 
 configure({
-    enforceActions: 'always'
+    enforceActions: 'observed'
 });
 
 export default class App extends React.Component {
