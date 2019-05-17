@@ -4,7 +4,6 @@ node_js:
   - '8'
 branches:
   only:
-    - dev
     - master
 cache:
   directories:
@@ -14,4 +13,4 @@ before_install:
 install:
   - npm install
 script:
-  - npm run citest
+  - npm run testci
