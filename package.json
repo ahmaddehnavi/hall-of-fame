@@ -8,7 +8,7 @@
     "test": "jest --maxWorkers=4 --forceExit",
     "testci": "jest -u --maxWorkers=4 --forceExit",
     "test:coverage": "npm test -- --coverage",
-    "test:badges": "npm run test:coverage  && jest-coverage-badges",
+    "test:badges": "npm run test:coverage  && jest-coverage-badges --input ./coverage/coverage-summary.json --output ./badges",
     "remotedev": "remotedev --hostname=localhost --port=8000 --injectserver=reactnative"
   },
   "dependencies": {

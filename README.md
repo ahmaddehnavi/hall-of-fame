@@ -1,9 +1,9 @@
 ﻿# hall of fame
  [![Build Status](https://travis-ci.com/ahmaddehnavi/hall-of-fame.svg?branch=master)](https://travis-ci.com/ahmaddehnavi/hall-of-fame)
- [![badge-lines](coverage/badge-lines.svg)](#)
- [![badge-branches](coverage/badge-branches.svg)](#)
- [![badge-functions](coverage/badge-functions.svg)](#)
- [![badge-statements](coverage/badge-statements.svg)](#)
+ [![badge-lines](badges/badge-lines.svg)](#)
+ [![badge-branches](./badges/badge-branches.svg)](#)
+ [![badge-functions](./badges/badge-functions.svg)](#)
+ [![badge-statements](./badges/badge-statements.svg)](#)
 
 ## directory structure
 * @shared
