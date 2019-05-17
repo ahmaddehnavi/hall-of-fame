@@ -20,7 +20,7 @@ export function DIInject(...names: Array<ServiceName>) {
                 injects[name] = stores[name];
             } else {
                 if (__DEV__) {
-                    Logger.warn(`can not inject ${name}.`)
+                    console.warn(`can not inject ${name}.`)
                 }
             }
         });

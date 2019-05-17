@@ -8,6 +8,8 @@ import {FameListComponent} from './FameListComponent';
 
 describe('FameListComponent Tests', () => {
 
+    jest.useFakeTimers();
+
     it('renders correctly', () => {
         let res = ListResource.form<{}, PopularPersonItemType>((req, {page}) => {
             return Promise.resolve({

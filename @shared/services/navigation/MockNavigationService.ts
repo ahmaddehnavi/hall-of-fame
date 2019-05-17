@@ -9,4 +9,8 @@ export class MockNavigationService extends NavigationService {
             dispatch
         })
     }
+
+    dispatch = jest.fn();
+    reset = jest.fn();
+    navigate = jest.fn()
 }
