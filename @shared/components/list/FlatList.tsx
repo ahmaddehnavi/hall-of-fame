@@ -9,8 +9,12 @@ import {LoadingView} from '../loading/LoadingView';
 import {ErrorView} from '../error/ErrorView';
 
 type EXFlatListProps<ItemType> = Partial<FlatListProps<ItemType>> & {
-    resource: ListResource<any, ItemType>
-    autoLoad?: boolean
+    resource?: ListResource<any, ItemType>
+    /**
+     * if resource require 'request' info to load you should set it before pass to
+     * this component or set `autoLoad` prop to 'never' and call load method yourself
+     */
+    autoLoad?: 'always' | 'no-data' | 'never'
     emptyMessage?: string
     renderItem: (row: { item: ItemType, index: number }) => React.ReactElement<any>
     ListErrorComponent?: React.ComponentClass<{ resource: ListResource<any, ItemType>, style? }>
@@ -23,16 +27,27 @@ type EXFlatListProps<ItemType> = Partial<FlatListProps<ItemType>> & {
 export class FlatList<ItemType> extends React.Component<EXFlatListProps<ItemType>> {
 
     static defaultProps = {
-        autoLoad: true,
         ListErrorComponent: ErrorView,
         ListEmptyComponent: EmptyView,
         ListLoadingComponent: LoadingView,
         ListLoadingMoreComponent: LoadingView,
+        autoLoad: 'no-data'
     };
 
     componentDidMount() {
-        if (this.props.autoLoad) {
-            this.props.resource.loadFirstPage();
+        let autoLoad = this.props.autoLoad;
+        let res = this.props.resource;
+        if (!res) {
+            return;
+        }
+        // do nothing if loading already in progress
+        if (res.isLoading) {
+            return;
+        }
+        if (autoLoad === 'always') {
+            res.loadFirstPage()
+        } else if (autoLoad === 'no-data' && !res.isSuccess) {
+            res.loadFirstPage()
         }
     }
 
@@ -46,20 +61,19 @@ export class FlatList<ItemType> extends React.Component<EXFlatListProps<ItemType
             resource,
             ...listProps
         } = this.props;
-        toJS(resource.isLoading);
 
-        if (resource.isError && resource.items.length === 0) {
+        if (resource && resource.isError && resource.items.length === 0) {
             if (ListErrorComponent) {
                 return <ListErrorComponent resource={resource} style={style}/>;
             }
         }
-        if (resource.isSuccess && resource.items.length === 0) {
+        if (resource && resource.isSuccess && resource.items.length === 0) {
             if (ListEmptyComponent) {
                 return <ListEmptyComponent resource={resource} style={style}/>
             }
         }
 
-        if (resource.isFirstLoadInProgress) {
+        if (resource && resource.isFirstLoadInProgress) {
             if (ListLoadingComponent) {
                 return <ListLoadingComponent resource={resource} style={style}/>
             }
@@ -72,12 +86,12 @@ export class FlatList<ItemType> extends React.Component<EXFlatListProps<ItemType
                     flexGrow: 1
                 }}
                 ListFooterComponent={
-                    resource.isLoadMoreInProgress && ListLoadingMoreComponent ?
+                    resource && resource.isLoadMoreInProgress && ListLoadingMoreComponent ?
                         <ListLoadingMoreComponent resource={resource}/>
                         : undefined}
                 keyExtractor={this.keyExtractor}
-                data={toJS(resource.items)}
-                refreshing={resource.isFirstLoadInProgress}
+                data={resource ? toJS(resource.items) : []}
+                refreshing={resource ? resource.isFirstLoadInProgress : undefined}
                 onRefresh={this.onRefresh}
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={.7}

@@ -1,6 +1,7 @@
 import {ResponsiveUtil} from '@shared';
 import autobind from 'autobind-decorator';
 import Color from 'color';
+import {observer} from 'mobx-react';
 import React, {Component} from 'react';
 import {Animated, Image, ImageSourcePropType} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -11,7 +12,8 @@ type Props = {
     slides: Array<SlideItemType>
 }
 
-export class IntroComponent extends Component<Props> {
+@observer
+export class IntroSlider extends Component<Props> {
     _scrollX = new Animated.Value(0);
 
     @autobind

@@ -1,19 +1,18 @@
-import {DIInject, INavigationService, InjectedNavigationServiceProps, MultiBackHandler, NavigationService, Screen} from '@shared';
+import {DIInject, FlatList, INavigationService, InjectedNavigationServiceProps, MultiBackHandler, NavigationService, Screen} from '@shared';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
-import {BackHandler} from 'react-native';
-import {Assets} from '../../assets/Assets';
+import {Image, StyleSheet} from 'react-native';
 import {ApiService, InjectedApiServiceProps} from '../../services/api/ApiService';
-import {SoundUtil} from '../../utils/SoundUtil';
-import {WelcomeScreen} from '../welcome/WelcomeScreen';
-import {FameListComponent} from './FameListComponent';
+import {PopularPersonItemType} from '../../services/api/models/PopularPersonResponseType';
+import {FameListScreenStore, InjectedFameListScreenStoreProps} from './FameListScreen.store';
 
 type FameListScreenProps =
     InjectedNavigationServiceProps &
+    InjectedFameListScreenStoreProps &
     InjectedApiServiceProps
 
-@DIInject(NavigationService.NAME, ApiService.NAME)
+@DIInject(NavigationService.NAME, ApiService.NAME, FameListScreenStore.NAME)
 @observer
 export class FameListScreen extends React.Component<FameListScreenProps> {
     static readonly ROUTE_NAME = 'FameListScreen';
@@ -26,32 +25,53 @@ export class FameListScreen extends React.Component<FameListScreenProps> {
         nav.reset(this.ROUTE_NAME);
     }
 
-
-    render() {
+    @autobind
+    renderItem({item, index}: { item: PopularPersonItemType, index: number }) {
         return (
-            <MultiBackHandler
-                timeout={500}
-                maxCount={2}
-                onPress={this.handleBackPress}>
-                <FameListComponent
-                    resolveProfileImageUrl={this.props.$api.resolveProfileImageUrl}
-                    listResource={this.props.$api.Person.popularList}/>
-            </MultiBackHandler>
+            <Image
+                key={item.id}
+                source={{uri: this.props.$api.resolveProfileImageUrl(item.profile_path)}}
+                resizeMode={'cover'}
+                style={styles.image}
+            />
         )
     }
 
-    @autobind
-    async handleBackPress(pressCount: number) {
-        if (pressCount === 1) {
-            WelcomeScreen.start(this.props.$navigation);
-            return;
-        }
-
-        if (pressCount === 2) {
-            await SoundUtil.play(Assets.sounds.test);
-            BackHandler.exitApp();
-        }
+    render() {
+        return (
+            <Screen style={styles.container}>
+                <FlatList
+                    style={{
+                        flex: 1
+                    }}
+                    contentContainerStyle={{
+                        flexGrow: 1
+                    }}
+                    resource={this.props.$fameListStore.popularListResource}
+                    data={this.props.$fameListStore.items}
+                    renderItem={this.renderItem}
+                    removeClippedSubviews
+                />
+                <MultiBackHandler
+                    timeout={500}
+                    maxCount={2}
+                    onPress={this.props.$fameListStore.handleBackPress}/>
+            </Screen>
+        )
     }
+
+
 }
 
 
+const styles = StyleSheet.create({
+    container: {},
+    image: {
+        marginBottom: 16,
+        marginHorizontal: '5%',
+        width: '100%',
+        alignSelf: 'center',
+        height: 200,
+        backgroundColor: '#919191'
+    }
+});
