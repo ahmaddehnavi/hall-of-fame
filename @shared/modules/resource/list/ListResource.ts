@@ -13,8 +13,12 @@ export type ListResourceDataType<ItemType> = {
 export type ListResourceLoaderType<ReqType, ItemType> = (req: ReqType, meta: { page: number }) => Promise<ListResourceDataType<ItemType>>;
 
 /**
- * use can use this class to convert any async task to stateful ListResource so can be paginated
+ * resource are an abstraction over data source so you may completely change
+ * the source of data without need to change view layer
+ * you can use this class to convert any async task to stateful paginated resource
  * fo example convert an api call to ListResource so can be use in FlatList
+ * ListResource#from()
+ * new ListResource()
  */
 @autobind
 export class ListResource<ReqType, ItemType, ErrorType = any>

@@ -19,7 +19,7 @@ export class SplashScreenStore extends BaseStore<Props> {
     public static readonly NAME = '$splashStore';
 
     loadConfig() {
-        this.props.$api.Config.configuration.load({})
+        return this.props.$api.Config.configuration.load()
             .then(async (self) => {
                 if (self.isError) {
                     Alert.alert(

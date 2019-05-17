@@ -15,7 +15,7 @@ type Loader<ReqType, DataType> = (req: ReqType) => Promise<ResourceDataType<Data
 export class Resource<ReqType, DataType, ErrorType = any>
     extends BaseResource <ReqType, ResourceDataType<DataType>, ErrorType, undefined, Resource<ReqType, DataType, ErrorType>> {
 
-    static form<ReqType, DataType, ErrorType = any>(loader: Loader<ReqType, DataType>) {
+    static form<ReqType = any, DataType = any, ErrorType = any>(loader: Loader<ReqType, DataType>) {
         return new Resource<ReqType, DataType, ErrorType>(loader);
     }
 
@@ -24,7 +24,7 @@ export class Resource<ReqType, DataType, ErrorType = any>
         super.setChildInstance(this);
     }
 
-    async load(req: ReqType) {
+    async load(req: ReqType = super._request) {
         return super.load(req, undefined);
     }
 

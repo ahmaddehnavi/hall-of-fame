@@ -84,7 +84,7 @@ export class ApiService extends BaseService {
 
 
     public readonly Config = {
-        configuration: Resource.form<{}, ApiConfigurationType>(async (req) => {
+        configuration: Resource.form<never, ApiConfigurationType>(async (req) => {
             let res = await this.http.get<ApiConfigurationType>('/configuration');
             return {
                 data: res.data,

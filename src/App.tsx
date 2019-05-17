@@ -1,12 +1,16 @@
 import {NavigationService, ThemeService} from '@shared';
 import {Provider} from 'mobx-react';
+import {configure} from 'mobx';
 import React from 'react';
-import {I18nManager} from 'react-native';
+import {I18nManager, UIManager} from 'react-native';
 import AppNavigator from './screens/AppNavigator';
 import {ApiService} from './services/api/ApiService';
 import {IntroService} from './services/intro/IntroService';
 import {createAllStore} from './stores/Stores';
 
+configure({
+    enforceActions: 'always'
+});
 
 export default class App extends React.Component {
 
@@ -39,6 +43,9 @@ export default class App extends React.Component {
 
         I18nManager.allowRTL(false);
         I18nManager.forceRTL(false);
+
+        UIManager.setLayoutAnimationEnabledExperimental &&
+        UIManager.setLayoutAnimationEnabledExperimental(true)
     }
 
     componentWillUnmount(): void {

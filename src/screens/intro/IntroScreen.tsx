@@ -4,7 +4,7 @@ import {observer} from 'mobx-react';
 import React from 'react';
 import {Assets} from '../../assets/Assets';
 import {WelcomeScreen} from '../welcome/WelcomeScreen';
-import {IntroComponent} from './IntroComponent';
+import {IntroSlider, SlideItemType} from './IntroSlider';
 
 export type IntroScreenProps =
     InjectedNavigationServiceProps &
@@ -23,29 +23,24 @@ export class IntroScreen extends React.Component<IntroScreenProps> {
         nav.reset(this.ROUTE_NAME);
     }
 
-    slides: Array<{ key, image, backgroundColor: string }> = [
+    slides: Array<SlideItemType> = [
         {
-            key: 'slide1',
             image: Assets.images.gif_1,
             backgroundColor: '#00b8d4',
         },
         {
-            key: 'slide2',
             image: Assets.images.gif_2,
             backgroundColor: '#64dd17',
         },
         {
-            key: 'slide13',
             image: Assets.images.gif_3,
             backgroundColor: '#ffd600',
         },
         {
-            key: 'slide14',
             image: Assets.images.gif_4,
             backgroundColor: '#ff6d00',
         },
         {
-            key: 'slide15',
             image: Assets.images.gif_5,
             backgroundColor: '#ff0000',
         }
@@ -58,7 +53,7 @@ export class IntroScreen extends React.Component<IntroScreenProps> {
 
     render() {
         return (
-            <IntroComponent
+            <IntroSlider
                 onDonePress={this.handleOnPress}
                 slides={this.slides}
             />

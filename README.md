@@ -51,7 +51,7 @@ export type ScreenNameProps =
 ParamsType
 
 @observer
-export default class ScreenName extends React.Component<ScreenNameProps> {
+exportW class ScreenName extends React.Component<ScreenNameProps> {
     static readonly RouteName = 'ScreenName';
 
     static start(nav: INavigationService,params:ParamsType) {
@@ -144,4 +144,37 @@ then you access service in component props. (`this.props.$name`)
 |  folder               | dash-case              | text-input
 |  instance             | camelCase              | let textInputStore   
 
+* you can use `file nesting` feature of your ide to show related file in same category 
+    *  jetbrains products :  https://www.jetbrains.com/help/webstorm/file-nesting-dialog.html
 * also see https://github.com/airbnb/javascript/tree/master/react
+
+
+* do not use default export (use named export) so you can reexport id needed by one line.
+
+ 
+# binding this
+you can use auto binding decorator `@autobind` to bind all method of class or single method
+
+do not bind react component class because may override lifecycle binding
+
+
+
+# mobx
+* decorate any component that may use observable value.
+    * if you dont know it use observable or not then decorate it :)
+    * decorate component with  `@observer` help to mobx to rerender it 
+    if any of observable value changed and improve performance.
+    
+    * `@observer`should be the first decoration add other above it   
+    ```
+        @DIInject('$store') // to optional injection or inject(''$store) to throw erro of can not inject
+        @observer // should be the first one
+        class MyComponent extends React.Component { ...
+    ``` 
+    *  you can use `Provider` component to provide dependency (it use in App.tsx check it)
+ 
+ for more info [@see mobx docs](https://mobx.js.org/)
+ 
+ 
+ # npm or yarn
+ we use yarn as package manager
