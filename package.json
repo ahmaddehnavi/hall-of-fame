@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest --maxWorkers=4 --forceExit",
+    "citest": "jest -u --maxWorkers=4 --forceExit",
     "remotedev": "remotedev --hostname=localhost --port=8000 --injectserver=reactnative"
   },
   "dependencies": {
