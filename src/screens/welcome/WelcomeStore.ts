@@ -1,8 +1,8 @@
-import {RandomUtil} from '@shared';
+import {RandomUtil, BaseStore} from '@shared';
 import autobind from 'autobind-decorator';
 import {action, observable} from 'mobx';
 import {ImageSourcePropType} from 'react-native';
-import Assets from '../assets/Assets';
+import {Assets} from '../../assets/Assets';
 import shuffleSeed from 'shuffle-seed'
 
 export type InjectedWelcomeStoreProps = {
@@ -15,7 +15,7 @@ type AnimationData = {
 }
 
 @autobind
-export class WelcomeStore {
+export class WelcomeStore extends BaseStore<{}> {
 
     public static readonly NAME = '$welcomeStore';
 
@@ -35,6 +35,10 @@ export class WelcomeStore {
         {animationName: 'slideInRight', image: Assets.images.gif_4},
         {animationName: 'bounce', image: Assets.images.gif_5},
     ];
+
+    constructor() {
+        super({})
+    }
 
     @action
     updateNumber(num: number) {

@@ -1,4 +1,4 @@
 export * from './NavigationService';
-export * from './NavigationParamsToProps';
+export * from './navigationParamsToProps';
 export * from './INavigationService'
 export * from './MockNavigationService'

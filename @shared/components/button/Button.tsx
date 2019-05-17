@@ -42,7 +42,7 @@ export type ButtonProps = Partial<TouchableProps> &
         onSubmit?: (data) => void
     }
 
-interface State {
+type State = {
     isPressed: boolean
 }
 

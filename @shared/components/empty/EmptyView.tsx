@@ -1,9 +1,8 @@
-import {Row} from '@shared';
+import {BaseResource, Row} from '@shared';
 import * as React from 'react';
-import {ActivityIndicator, Text} from 'react-native';
+import {Text} from 'react-native';
 
-export class FlatListLoading extends React.Component<{ style? }> {
-
+export class EmptyView extends React.Component<{ style?, message: string }> {
     render() {
         return (
             <Row style={{
@@ -12,9 +11,10 @@ export class FlatListLoading extends React.Component<{ style? }> {
                 justifyContent: 'center',
                 flex: 1,
             }}>
-                <ActivityIndicator size={'small'}/>
-                <Text style={{marginStart: 8}}>
-                    Loading...
+                <Text>
+                    {
+                        this.props.message || 'No Items!'
+                    }
                 </Text>
             </Row>
         )

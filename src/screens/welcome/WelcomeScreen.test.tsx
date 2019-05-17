@@ -3,7 +3,7 @@ import React from 'react';
 import 'react-native';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import {WelcomeStore} from '../../stores/WelcomeStore';
+import {WelcomeStore} from './WelcomeStore';
 import {WelcomeScreen} from './WelcomeScreen';
 
 it('renders correctly', () => {

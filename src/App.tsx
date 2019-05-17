@@ -1,13 +1,11 @@
-import {NavigationService} from '@shared';
+import {NavigationService, ThemeService} from '@shared';
 import {Provider} from 'mobx-react';
 import React from 'react';
 import {I18nManager} from 'react-native';
-import {ThemeService} from '@shared';
 import AppNavigator from './screens/AppNavigator';
 import {ApiService} from './services/api/ApiService';
 import {IntroService} from './services/intro/IntroService';
-
-import {WelcomeStore} from './stores/WelcomeStore';
+import {stores} from './stores/stores';
 
 
 export default class App extends React.Component {
@@ -19,24 +17,20 @@ export default class App extends React.Component {
         [ApiService.NAME]: new ApiService(),
     };
 
-    protected stores = {
-        [WelcomeStore.NAME]: new WelcomeStore()
-    };
-
     constructor(p) {
         super(p);
 
         // init services
         for (let key in this.services) {
             if (this.services[key]) {
-                this.services[key].$init(this.services);
+                this.services[key].init(this.services);
             }
         }
 
         // start services when all service initialized.
         for (let key in this.services) {
             if (this.services[key]) {
-                this.services[key].$onStart();
+                this.services[key].onStart();
             }
         }
 
@@ -48,7 +42,7 @@ export default class App extends React.Component {
         // stop all services
         for (let key in this.services) {
             if (this.services[key]) {
-                this.services[key].$onStop();
+                this.services[key].onStop();
             }
         }
     }
@@ -57,7 +51,7 @@ export default class App extends React.Component {
         let nav = this.services[NavigationService.NAME];
 
         return (
-            <Provider {...this.services} {...this.stores}>
+            <Provider {...this.services} {...stores}>
                 <AppNavigator
                     ref={(ref) => {
                         if (ref) {

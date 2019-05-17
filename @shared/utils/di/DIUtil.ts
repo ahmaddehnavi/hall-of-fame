@@ -1,8 +1,13 @@
 import {Logger} from 'ad-logger';
 import {inject, Provider} from 'mobx-react';
 
-type ServiceName = '$navigation' | string
+type ServiceName = '$theme' | '$navigation'|    string
 
+/**
+ *
+ * @param names : inject names
+ * @constructor
+ */
 export function DIInject(...names: Array<ServiceName>) {
     return inject((stores, nextProps, context) => {
         let injects = {};

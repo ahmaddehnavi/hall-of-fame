@@ -137,6 +137,7 @@ exports[`renders correctly 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "marginHorizontal": "5%",
                   "width": "90%",
                 }
               }
@@ -168,6 +169,7 @@ exports[`renders correctly 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "marginHorizontal": "5%",
                   "width": "90%",
                 }
               }
@@ -199,6 +201,7 @@ exports[`renders correctly 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "marginHorizontal": "5%",
                   "width": "90%",
                 }
               }
@@ -230,6 +233,7 @@ exports[`renders correctly 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "marginHorizontal": "5%",
                   "width": "90%",
                 }
               }
@@ -261,6 +265,7 @@ exports[`renders correctly 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "marginHorizontal": "5%",
                   "width": "90%",
                 }
               }

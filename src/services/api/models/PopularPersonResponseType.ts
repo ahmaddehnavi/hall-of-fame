@@ -1,4 +1,4 @@
-export interface KnownFor {
+type KnownForType = {
     original_name: string;
     id: number;
     media_type: string;
@@ -20,18 +20,18 @@ export interface KnownFor {
     release_date: string;
 }
 
-export interface PopularPersonItem {
+export type PopularPersonItemType = {
     popularity: number;
     id: number|string;
     profile_path: string;
     name: string;
-    known_for: KnownFor[];
+    known_for: KnownForType[];
     adult: boolean;
 }
 
-export interface PopularPersonResponse {
+export type PopularPersonResponseType = {
     page: number;
     total_results: number;
     total_pages: number;
-    results: PopularPersonItem[];
+    results: PopularPersonItemType[];
 }

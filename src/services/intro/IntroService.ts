@@ -2,7 +2,7 @@ import {BaseService} from '@shared';
 import {AsyncStorage} from 'react-native';
 
 export type InjectedIntroServiceProps = {
-    $intro:IntroService
+    $intro: IntroService
 }
 
 export class IntroService extends BaseService {

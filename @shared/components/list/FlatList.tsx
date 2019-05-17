@@ -3,10 +3,10 @@ import {toJS} from 'mobx';
 import {observer} from 'mobx-react';
 import * as React from 'react';
 import {FlatList as RNFlatList, FlatListProps} from 'react-native';
-import {ListResource} from '../../resource/ListResource';
-import {FlatListEmpty} from './FlatListEmpty';
-import {FlatListLoading} from './FlatListLoading';
-import {FlatListRetry} from './FlatListRetry';
+import {ListResource} from '../../modules/resource/list/ListResource';
+import {EmptyView} from '../empty/EmptyView';
+import {LoadingView} from '../loading/LoadingView';
+import {ErrorView} from '../error/ErrorView';
 
 type EXFlatListProps<ItemType> = Partial<FlatListProps<ItemType>> & {
     resource: ListResource<any, ItemType>
@@ -24,10 +24,10 @@ export class FlatList<ItemType> extends React.Component<EXFlatListProps<ItemType
 
     static defaultProps = {
         autoLoad: true,
-        ListErrorComponent: FlatListRetry,
-        ListEmptyComponent: FlatListEmpty,
-        ListLoadingComponent: FlatListLoading,
-        ListLoadingMoreComponent: FlatListLoading,
+        ListErrorComponent: ErrorView,
+        ListEmptyComponent: EmptyView,
+        ListLoadingComponent: LoadingView,
+        ListLoadingMoreComponent: LoadingView,
     };
 
     componentDidMount() {
@@ -68,6 +68,9 @@ export class FlatList<ItemType> extends React.Component<EXFlatListProps<ItemType
         return (
             <RNFlatList
                 style={[{flex: 1}, style]}
+                contentContainerStyle={{
+                    flexGrow: 1
+                }}
                 ListFooterComponent={
                     resource.isLoadMoreInProgress && ListLoadingMoreComponent ?
                         <ListLoadingMoreComponent resource={resource}/>

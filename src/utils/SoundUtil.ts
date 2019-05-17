@@ -1,5 +1,4 @@
 import Sound from 'react-native-sound'
-import Assets from '../assets/Assets';
 
 
 export class SoundUtil {

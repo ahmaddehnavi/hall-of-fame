@@ -9,15 +9,15 @@ export class BaseService<Config extends { [key: string]: IService<any> } = any> 
         return this._config;
     }
 
-    $init(config: Config) {
+    init(config: Config) {
         this._config = config;
     }
 
-    $onStart() {
+    onStart() {
 
     }
 
-    $onStop() {
+    onStop() {
 
     }
 }

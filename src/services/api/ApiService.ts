@@ -2,8 +2,8 @@ import {ArrayUtil, BaseService, ListResource, Resource, ResponsiveUtil} from '@s
 import autobind from 'autobind-decorator';
 import Axios, {AxiosInstance} from 'axios';
 import {Config} from '../../Config';
-import {ApiConfigurationModel} from '../../models/ApiConfigurationModel';
-import {PopularPersonItem, PopularPersonResponse} from '../../models/PopularPersonResponse';
+import {ApiConfigurationType} from './models/ApiConfigurationType';
+import {PopularPersonItemType, PopularPersonResponseType} from './models/PopularPersonResponseType';
 
 export type InjectedApiServiceProps = {
     $api: ApiService
@@ -25,8 +25,12 @@ export class ApiService extends BaseService {
             baseURL: Config.BASE_URL,
             params: {
                 api_key: Config.API_KEY
-            }
+            },
+            validateStatus: status => (status >= 200 && status < 300),
+            responseType: 'json',
         });
+
+        // to configure jwt see axios document
 
     }
 
@@ -45,6 +49,7 @@ export class ApiService extends BaseService {
         if (!this.resolveProfileImageUrlCache && this.Config.configuration.data) {
             let base = this.Config.configuration.data.images.secure_base_url;
 
+            // find closed available size of profile image
             let sizes = this.Config.configuration.data.images.profile_sizes;
             let widths = sizes.filter(it => it.startsWith('w')).map(it => Number(it.substring(1)));
             let closestWidth = ArrayUtil.findClosestGreaterValue(widths, preferredSize);
@@ -79,8 +84,8 @@ export class ApiService extends BaseService {
 
 
     public readonly Config = {
-        configuration: Resource.form<{}, ApiConfigurationModel>(async (req) => {
-            let res = await this.http.get<ApiConfigurationModel>('/configuration');
+        configuration: Resource.form<{}, ApiConfigurationType>(async (req) => {
+            let res = await this.http.get<ApiConfigurationType>('/configuration');
             return {
                 data: res.data,
                 message: res.statusText
@@ -91,8 +96,8 @@ export class ApiService extends BaseService {
     // ----------------------------------------------------------------------------------------------------------
 
     public readonly Person = {
-        popularList: ListResource.form<{}, PopularPersonItem>(async (req, {page}) => {
-            let res = await this.http.get<PopularPersonResponse>('/person/popular', {params: {page}});
+        popularList: ListResource.form<{}, PopularPersonItemType>(async (req, {page}) => {
+            let res = await this.http.get<PopularPersonResponseType>('/person/popular', {params: {page}});
             return {
                 items: res.data.results,
                 message: res.statusText,

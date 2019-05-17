@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import {BaseResource} from './BaseResource';
+import {BaseResource} from '../base/BaseResource';
 
 export type ResourceDataType<DataType> = {
     data: DataType,
@@ -7,6 +7,10 @@ export type ResourceDataType<DataType> = {
 }
 type Loader<ReqType, DataType> = (req: ReqType) => Promise<ResourceDataType<DataType>>
 
+/**
+ * use can use this class to convert any async task to stateful Resource
+ * fo example convert an api call to resource
+ */
 @autobind
 export class Resource<ReqType, DataType, ErrorType = any>
     extends BaseResource <ReqType, ResourceDataType<DataType>, ErrorType, undefined, Resource<ReqType, DataType, ErrorType>> {
@@ -17,7 +21,7 @@ export class Resource<ReqType, DataType, ErrorType = any>
 
     constructor(loader: Loader<ReqType, DataType>) {
         super(loader);
-        super.init(this);
+        super.setChildInstance(this);
     }
 
     async load(req: ReqType) {
@@ -26,5 +30,9 @@ export class Resource<ReqType, DataType, ErrorType = any>
 
     get data() {
         return super.response ? super.response.data : undefined;
+    }
+
+    get message() {
+        return super.response ? super.response.message : undefined
     }
 }

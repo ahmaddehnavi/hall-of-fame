@@ -1,6 +1,6 @@
 export const Assets = {
-    sounds:{
-        test:require('./sounds/test.wav')
+    sounds: {
+        test: require('./sounds/test.wav')
     },
     images: {
         gif_1: require('./images/b1.gif'),
@@ -11,4 +11,3 @@ export const Assets = {
     }
 };
 
-export default Assets;

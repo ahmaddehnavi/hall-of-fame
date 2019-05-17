@@ -2,8 +2,7 @@ import {DIInject, INavigationService, InjectedNavigationServiceProps, InjectedTh
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import Assets from '../../assets/Assets';
+import {Assets} from '../../assets/Assets';
 import {WelcomeScreen} from '../welcome/WelcomeScreen';
 import {IntroComponent} from './IntroComponent';
 

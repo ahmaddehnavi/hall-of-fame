@@ -3,9 +3,6 @@
 import {SomeComponent} from '@shared';
 ```
 
-#naming conversion
-all exported module should be start with **PX** prefix (ex: PXScreen) 
-
 #how to add new module
 1. first create an folder for your module 
 in corresponding category (components, services, utils, ... ).
@@ -14,4 +11,4 @@ in corresponding category (components, services, utils, ... ).
 
 **`important note : do not import from index inside @shared modules
  because it can create a cilcular dependency issue.
- and resolve to undefined imported value`**
+ and resolve to an undefined imported value`**

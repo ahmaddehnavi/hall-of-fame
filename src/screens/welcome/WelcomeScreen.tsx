@@ -12,9 +12,9 @@ import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
 import {BackHandler, StyleSheet} from 'react-native';
-import {InjectedWelcomeStoreProps, WelcomeStore} from '../../stores/WelcomeStore';
+import {InjectedWelcomeStoreProps, WelcomeStore} from './WelcomeStore';
 import {SoundUtil} from '../../utils/SoundUtil';
-import Assets from '../../assets/Assets';
+import {Assets} from '../../assets/Assets';
 import {FameListScreen} from '../fame-list/FameListScreen';
 import {WelcomeComponent} from './WelcomeComponent';
 
@@ -80,6 +80,7 @@ export class WelcomeScreen extends React.Component<WelcomeScreenProps> {
                 })
         }
     }
+
 }
 
 

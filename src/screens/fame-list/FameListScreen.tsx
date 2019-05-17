@@ -1,9 +1,9 @@
-import {DIInject, INavigationService, InjectedNavigationServiceProps, NavigationService} from '@shared';
+import {DIInject, INavigationService, InjectedNavigationServiceProps, MultiBackHandler, NavigationService, Screen} from '@shared';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react';
 import React from 'react';
 import {BackHandler} from 'react-native';
-import Assets from '../../assets/Assets';
+import {Assets} from '../../assets/Assets';
 import {ApiService, InjectedApiServiceProps} from '../../services/api/ApiService';
 import {SoundUtil} from '../../utils/SoundUtil';
 import {WelcomeScreen} from '../welcome/WelcomeScreen';
@@ -29,10 +29,14 @@ export class FameListScreen extends React.Component<FameListScreenProps> {
 
     render() {
         return (
-            <FameListComponent
-                $api={this.props.$api}
-                listResource={this.props.$api.Person.popularList}
-                onBackPress={this.handleBackPress}/>
+            <MultiBackHandler
+                timeout={500}
+                maxCount={2}
+                onPress={this.handleBackPress}>
+                <FameListComponent
+                    resolveProfileImageUrl={this.props.$api.resolveProfileImageUrl}
+                    listResource={this.props.$api.Person.popularList}/>
+            </MultiBackHandler>
         )
     }
 

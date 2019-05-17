@@ -1,4 +1,4 @@
-export interface ApiConfigurationImages {
+export type ApiConfigurationImages = {
     base_url: string;
     secure_base_url: string;
     backdrop_sizes: string[];
@@ -8,7 +8,7 @@ export interface ApiConfigurationImages {
     still_sizes: string[];
 }
 
-export interface ApiConfigurationModel {
+export type ApiConfigurationType = {
     images: ApiConfigurationImages;
     change_keys: string[];
 }

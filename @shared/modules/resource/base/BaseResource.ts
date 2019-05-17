@@ -1,13 +1,15 @@
 import autobind from 'autobind-decorator';
 import {action, observable} from 'mobx';
+import {IResourceState, ResourceStateType} from './IResourceState';
+import {IResourceUpdater} from './IResourceUpdater';
 
-export type ResourceState = 'none' | 'loading' | 'success' | 'error';
 
 @autobind
-export class BaseResource<ReqType, ResponseType, ErrorType = any, MetaType = never, T = any> {
+export class BaseResource<ReqType, ResponseType, ErrorType = any, MetaType = never, T = any>
+    implements IResourceState, IResourceUpdater<ResponseType, ErrorType> {
 
     @observable.ref
-    protected _state: ResourceState = 'none';
+    protected _state: ResourceStateType = 'none';
 
     @observable.ref
     protected _response: ResponseType | undefined;
@@ -17,26 +19,44 @@ export class BaseResource<ReqType, ResponseType, ErrorType = any, MetaType = nev
 
     protected readonly _loader: (request: ReqType, meta: MetaType) => Promise<ResponseType>;
 
-    protected _lastRequest: ReqType;
-    protected _lastMeta: MetaType;
+    protected _request: ReqType;
+    protected _meta: MetaType;
     protected _childInstance: T;
 
     public constructor(loader: (req: ReqType, meta: MetaType) => Promise<ResponseType>) {
         this._loader = loader;
     }
 
-    init(childInstance: T) {
+    setChildInstance(childInstance: T) {
         this._childInstance = childInstance;
     }
 
-    @action
-    async load(req: ReqType, meta: MetaType): Promise<T> {
-        this._lastRequest = req;
-        this._lastMeta = meta;
 
+    get request() {
+        return this._request
+    }
+
+    @action
+    setRequest(req: ReqType) {
+        this._request = req
+    }
+
+    get meta() {
+        return this._meta
+    }
+
+    @action
+    setMeta(meta: MetaType) {
+        this._meta = meta
+    }
+
+    @action
+    async load(request: ReqType = this._request, meta: MetaType = this._meta): Promise<T> {
+        this.setRequest(request);
+        this.setMeta(meta);
         this.notifyLoading();
         try {
-            let response = await this._loader(req, meta);
+            let response = await this._loader(request, meta);
             this.notifySuccess(response);
         } catch (e) {
             this.notifyError(e);
@@ -45,7 +65,7 @@ export class BaseResource<ReqType, ResponseType, ErrorType = any, MetaType = nev
     }
 
     reload() {
-        return this.load(this._lastRequest, this._lastMeta);
+        return this.load();
     }
 
     get state() {
@@ -78,18 +98,20 @@ export class BaseResource<ReqType, ResponseType, ErrorType = any, MetaType = nev
 
 
     @action
-    protected notifyLoading() {
+    notifyLoading() {
         this._state = 'loading';
+        this._error = undefined;
+        this._response = undefined;
     }
 
     @action
-    protected notifySuccess(response: ResponseType) {
+    notifySuccess(response: ResponseType) {
         this._response = response;
         this._state = 'success';
     }
 
     @action
-    protected notifyError(error: ErrorType) {
+    notifyError(error: ErrorType) {
         this._error = error;
         this._state = 'error';
     }
