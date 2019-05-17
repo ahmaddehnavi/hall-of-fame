@@ -6,6 +6,7 @@ import renderer from 'react-test-renderer';
 import {ApiService} from '../../services/api/ApiService';
 import {IntroService} from '../../services/intro/IntroService';
 import {SplashScreen} from './SplashScreen';
+import {SplashScreenStore} from './SplashScreen.store';
 
 describe('Splash Screen test', () => {
     let $navigation = new NavigationService();
@@ -13,12 +14,14 @@ describe('Splash Screen test', () => {
     $navigation.setNavigator({dispatch});
 
     it('renders correctly', async () => {
-
+        let $api = new ApiService();
+        let $splashStore = new SplashScreenStore({$navigation, $api, $intro: new IntroService()});
         let tree = renderer.create(
             <SplashScreen
-                $api={new ApiService()}
+                $api={$api}
                 $navigation={$navigation}
                 $intro={new IntroService()}
+                $splashStore={$splashStore}
             />
         );
         expect(tree).toMatchSnapshot();

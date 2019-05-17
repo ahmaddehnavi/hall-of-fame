@@ -5,7 +5,7 @@ import {I18nManager} from 'react-native';
 import AppNavigator from './screens/AppNavigator';
 import {ApiService} from './services/api/ApiService';
 import {IntroService} from './services/intro/IntroService';
-import {stores} from './stores/stores';
+import {createAllStore} from './stores/Stores';
 
 
 export default class App extends React.Component {
@@ -16,6 +16,8 @@ export default class App extends React.Component {
         [ThemeService.NAME]: new ThemeService(),
         [ApiService.NAME]: new ApiService(),
     };
+
+    protected stores;
 
     constructor(p) {
         super(p);
@@ -33,6 +35,7 @@ export default class App extends React.Component {
                 this.services[key].onStart();
             }
         }
+        this.stores = createAllStore(this.services);
 
         I18nManager.allowRTL(false);
         I18nManager.forceRTL(false);
@@ -51,7 +54,7 @@ export default class App extends React.Component {
         let nav = this.services[NavigationService.NAME];
 
         return (
-            <Provider {...this.services} {...stores}>
+            <Provider {...this.services} {...this.stores}>
                 <AppNavigator
                     ref={(ref) => {
                         if (ref) {

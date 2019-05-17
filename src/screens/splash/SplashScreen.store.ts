@@ -1,15 +1,22 @@
-import {AsyncUtil} from '@shared';
+import {AsyncUtil, BaseStore, InjectedNavigationServiceProps} from '@shared';
+import autobind from 'autobind-decorator';
 import {Alert, BackHandler} from 'react-native';
+import {InjectedApiServiceProps} from '../../services/api/ApiService';
+import {InjectedIntroServiceProps} from '../../services/intro/IntroService';
 import {FameListScreen} from '../fame-list/FameListScreen';
 import {IntroScreen} from '../intro/IntroScreen';
 
-type Props = {}
+type Props = InjectedApiServiceProps &
+    InjectedIntroServiceProps &
+    InjectedNavigationServiceProps
 
-export class SplashScreenStore {
-    props;
-    constructor() {
+export type InjectedSplashScreenStore = {
+    $splashStore: SplashScreenStore
+}
 
-    }
+@autobind
+export class SplashScreenStore extends BaseStore<Props> {
+    public static readonly NAME = '$splashStore';
 
     loadConfig() {
         this.props.$api.Config.configuration.load({})

@@ -19,7 +19,9 @@ export function DIInject(...names: Array<ServiceName>) {
             } else if (name in stores) {
                 injects[name] = stores[name];
             } else {
-                Logger.warn(`can not inject ${name}.`)
+                if (__DEV__) {
+                    Logger.warn(`can not inject ${name}.`)
+                }
             }
         });
         return injects;

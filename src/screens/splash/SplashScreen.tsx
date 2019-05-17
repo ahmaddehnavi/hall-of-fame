@@ -6,10 +6,14 @@ import {ApiService, InjectedApiServiceProps} from '../../services/api/ApiService
 import {InjectedIntroServiceProps, IntroService} from '../../services/intro/IntroService';
 import {FameListScreen} from '../fame-list/FameListScreen';
 import {IntroScreen} from '../intro/IntroScreen';
+import {InjectedSplashScreenStore, SplashScreenStore} from './SplashScreen.store';
 
-type Props = InjectedIntroServiceProps & InjectedNavigationServiceProps & InjectedApiServiceProps
+type Props = InjectedIntroServiceProps &
+    InjectedNavigationServiceProps &
+    InjectedApiServiceProps &
+    InjectedSplashScreenStore
 
-@inject(NavigationService.NAME, IntroService.NAME, ApiService.NAME)
+@inject(NavigationService.NAME, IntroService.NAME, ApiService.NAME, SplashScreenStore.NAME)
 @observer
 export class SplashScreen extends React.Component<Props> {
     static readonly ROUTE_NAME = 'SplashScreen';
