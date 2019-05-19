@@ -39,7 +39,7 @@ export class SplashScreenStore extends BaseStore<Props> {
                     // on first run we need to show intro screen
                     let enabled = await this.props.$intro.isIntroEnabled();
                     // on second run we dont want to show intro screen so disable it
-                    await this.props.$intro.setIntroEnabled(true);
+                    await this.props.$intro.setIntroEnabled(false);
                     await AsyncUtil.wait(100);
                     if (enabled) {
                         IntroScreen.resetTo(this.props.$navigation)
