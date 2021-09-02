@@ -18,7 +18,7 @@
     "ad-http": "^0.0.4",
     "ad-logger": "^0.0.10",
     "autobind-decorator": "^2.4.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "color": "^3.1.1",
     "deepmerge": "^3.2.0",
     "mobx": "^4.9.4",
